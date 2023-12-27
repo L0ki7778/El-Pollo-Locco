@@ -1,0 +1,7 @@
+#canvas {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  z-index: -1;
+  background-color: black;
+}/*# sourceMappingURL=style.css.map */

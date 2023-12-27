@@ -1,19 +1,11 @@
-let names=[];
-
-function addContact(fn,ln,phone){
-    let person = new Contact(fn,ln,phone);
-    names.push(person);
-}
-
-function addFriend(fn,ln,relationship){
-    let person = new Friend(fn,ln,relationship);
-    names.push(person);
-}
-
-addFriend("Bob","Smith","friend");
-addFriend("Sally","Smith","friend");
-addFriend("Rene","Heller","friend");
-
-addContact("Bob","Smith","555-555-5555");
-addContact("Sally","Smith","555-555-5555");
-addContact("Rene","Heller","555-555-5555");
+function showMousePosition(event) {
+    let canvas = document.getElementById('canvas');
+    let rect = canvas.getBoundingClientRect();
+    let mouseX = event.clientX - rect.left;
+    let mouseY = event.clientY - rect.top;
+    console.clear();
+    console.log('Mouse Position on Canvas:');
+    console.log('X: ' + mouseX);
+    console.log('Y: ' + mouseY);
+  }
+  canvas = document.getElementById('canvas');
