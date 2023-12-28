@@ -1,5 +1,6 @@
 class World {
     ctx;
+    keyoard;
     character = new Character(50, 200);
     backgroundOne = new BackgroundOne(0,this.y);
     backgroundTwo = new BackgroundTwo(0,this.y);
@@ -19,9 +20,10 @@ class World {
         new Chicken(Math.random() * 500 + 200, 395),
     ];
 
-    constructor(canvas) {
+    constructor(canvas,keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
+        this.keyboard = keyboard;
         this.draw();
     }
     
