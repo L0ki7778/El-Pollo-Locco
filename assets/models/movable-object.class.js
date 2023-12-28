@@ -1,21 +1,25 @@
 
-class  MovableObject{
+class MovableObject {
     x;
     y;
     img;
-    constructor(x, y){
+    width=100;
+    height=250;
+    constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.img = new Image();
-        this.img.src = 'assets/img/2_character_pepe/2_walk/W-21.png';
     }
 
+    loadImage(path) {
+        this.img = new Image();
+        this.img.src = path;
+    }
 
-    moveRight(){
+    moveRight() {
         console.log("moves right")
     }
 
-    moveLeft(){
+    moveLeft() {
         console.log("moves left")
     }
 }
