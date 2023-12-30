@@ -1,8 +1,8 @@
 let canvas;
 let world;
 let X;
-let bgX;
-// let keyboard = new Keyboard();
+let bgX=1;
+let limit;
 
 /**
  * Initializes the canvas and sets up the world object.
