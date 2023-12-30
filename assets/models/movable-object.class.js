@@ -3,14 +3,18 @@ class MovableObject {
     x;
     y;
     img;
-    imageCache={};
-    width=100;
-    height=250;
+    imageCache = {};
+    width = 100;
+    height = 250;
+    currentImage = 0;
     otherDirection = false;
-    constructor(x, y,speed) {
+    speedY = 0;
+    accelearion = 1;
+    constructor(x, y, speed) {
         this.x = x;
         this.y = y;
-        this.speed = speed
+        this.speed = speed;
+        this.default_positionY = y;
     }
 
 
@@ -19,11 +23,11 @@ class MovableObject {
      *
      * @param {Array} arr - An array of image paths.
      */
-    loadImages(arr){
+    loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
             img.src = path;
-            this.imageCache[path]=img;
+            this.imageCache[path] = img;
         })
     }
 
@@ -38,18 +42,58 @@ class MovableObject {
         this.img.src = path;
     }
 
-    animate() {
-        this.moveLeft(this.speed)
-    }
-    
-    moveRight(speed) {
-        setInterval(() => {
-            this.x += speed;
-        }, 1000 / 60);    }
 
-    moveLeft(speed) {
-        setInterval(() => {
-            this.x -= speed;
+    animate() {
+        setInterval(()=>{
+            this.moveLeft()
+        },1000/60)
+    }
+
+
+    playAnimation(image) {
+        let i = this.currentImage % image.length;
+        let path = image[i];
+        this.img = this.imageCache[path];
+        this.currentImage++;
+    }
+
+
+    moveRight() {
+        this.x += this.speed;
+        this.otherDirection = false;
+        this.world.keyboard.KEY_LEFT = false;
+    }
+
+
+    moveLeft() {
+        this.x -= this.speed;
+        // this.world.keyboard.KEY_RIGHT = false;
+    }
+
+
+    applyGravity() {
+       setInterval(() => {
+            if (this.isAboveGround(this.default_positionY)||this.speed) {
+                this.keepFalling();
+            }
+            if(!this.isAboveGround(this.default_positionY)) {
+                this.y = this.default_positionY;
+                this.stopFalling()
+                console.log(this.speedY);
+            }
         }, 1000 / 60);
+    }
+
+    keepFalling() {
+        this.y -= this.speedY;
+        this.speedY -= this.accelearion;
+    }
+
+    stopFalling() {
+        this.speedY = 0;
+    }
+
+    isAboveGround(default_positionY) {
+        return this.y < default_positionY;
     }
 }
