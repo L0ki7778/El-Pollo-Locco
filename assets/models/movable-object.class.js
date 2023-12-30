@@ -10,6 +10,7 @@ class MovableObject {
     otherDirection = false;
     speedY = 0;
     accelearion = 1;
+    
     constructor(x, y, speed) {
         this.x = x;
         this.y = y;
@@ -20,9 +21,9 @@ class MovableObject {
 
     /**
      * Loads images from an array of paths and caches them.
-     *
-     * @param {Array} arr - An array of image paths.
-     */
+    *
+    * @param {Array} arr - An array of image paths.
+    */
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
@@ -34,19 +35,37 @@ class MovableObject {
 
     /**
      * Loads an image from a given path and caches it.
-     *
-     * @param {string} path - The path of the image to load.
-     */
+    *
+    * @param {string} path - The path of the image to load.
+    */
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
 
 
+    draw(ctx) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+
+    }
+
+
+    drawFrame(ctx) {
+        if (this instanceof Character || this instanceof Chicken||this instanceof Endboss) {
+            {
+                ctx.beginPath();
+                ctx.strokeStyle = 'blue';
+                ctx.lineWidth = '3';
+                ctx.rect(this.x, this.y, this.width, this.height);
+                ctx.stroke();
+            }
+        }
+    }
+
     animate() {
-        setInterval(()=>{
+        setInterval(() => {
             this.moveLeft()
-        },1000/60)
+        }, 1000 / 60)
     }
 
 
@@ -72,11 +91,11 @@ class MovableObject {
 
 
     applyGravity() {
-       setInterval(() => {
-            if (this.isAboveGround(this.default_positionY)||this.speed) {
+        setInterval(() => {
+            if (this.isAboveGround(this.default_positionY) || this.speed) {
                 this.keepFalling();
             }
-            if(!this.isAboveGround(this.default_positionY)) {
+            if (!this.isAboveGround(this.default_positionY)) {
                 this.y = this.default_positionY;
                 this.stopFalling()
                 console.log(this.speedY);
@@ -96,4 +115,26 @@ class MovableObject {
     isAboveGround(default_positionY) {
         return this.y < default_positionY;
     }
+
+
+
+    isColliding(obj) {
+        return (
+            this.x + this.width > obj.x &&
+            this.y + this.height > obj.y &&
+            this.x < obj.x &&
+            this.y < obj.y + obj.height
+        );
+
+    }
 }
+
+// isColliding(obj) {
+//     return (this.x + this.width) >= obj.x && this.x <= (obj.x + obj.width) &&
+//         (this.y + this.offsetY + this.height) >= obj.y &&
+//         (this.y + this.offsetY) <= (obj.y + obj.height) 
+//             // obj.onCollisionCourse; 
+//         }
+// Optional: hiermit könnten wir schauen,
+//  ob ein Objekt sich in die richtige Richtung bewegt.
+//  Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
