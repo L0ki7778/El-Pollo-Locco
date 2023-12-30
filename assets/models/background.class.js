@@ -1,14 +1,15 @@
 class BackgroundFrontLayer extends MovableObject {
     speed;
     width;
+    widthMultiplikator;
     shiftInterval;
     height;
 
-    constructor(x, y, height,width,speed) {
+    constructor(x, y, height,width,widthMultiplikator,speed) {
         super(x,y);
         this.speed=speed
-        this.width = width*3;
         this.loadImage("/assets/img/5_background/layers/1_first_layer/full.png");
+        this.width = width*widthMultiplikator;
         this.height = height;
         this.y = 480 - this.height;
     }
@@ -23,8 +24,7 @@ class BackgroundFrontLayer extends MovableObject {
         if (X >= 280) {
             if (!this.shiftInterval) {
                 this.shiftInterval = setInterval(() => {
-                    if(this.x/this.speed>=-limit) {
-                        this.x -= speed;}
+                        this.x -= speed;
                         this.returnBackgroundXPosition()
                 }, 1000 / 60);
             }

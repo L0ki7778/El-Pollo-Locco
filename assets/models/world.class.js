@@ -1,7 +1,6 @@
 class World {
     ctx;
     keyoard;
-    level=level1;
     character = new Character(50, 200);
     backgroundObjects=level1.backgroundObjects;
     sky=new Sky(0,0);
@@ -13,11 +12,6 @@ class World {
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.draw();
-        this.set_level_limit();
-    }
-
-    set_level_limit(){
-        limit = this.level.level_end_x
     }
     
     draw() {

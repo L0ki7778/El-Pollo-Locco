@@ -1,3 +1,4 @@
+
 class Character extends MovableObject {
     LEFT = false;
     RIGHT = false;
@@ -5,14 +6,10 @@ class Character extends MovableObject {
     DOWN = false;
     SPACE = false;
     THROW = false;
-    default_y = 200;
     noSpeed = 0;
     currentImage = 0;
     walkInterval;
-
-    walking_sound = new Audio('/assets/audio/step.mp3');
-    jumping_sound = new Audio('/assets/audio/jump.mp3');
-    throwing_sound = new Audio('/assets/audio/throw.mp3');
+    animationInterval;
 
     IMAGES_WALKING = [
         "/assets/img/2_character_pepe/2_walk/W-21.png",
@@ -23,90 +20,63 @@ class Character extends MovableObject {
         "/assets/img/2_character_pepe/2_walk/W-26.png"
     ];
 
-    IMAGES_JUMPING = [
-        "assets/img/2_character_pepe/3_jump/J-31.png",
-        "assets/img/2_character_pepe/3_jump/J-32.png",
-        "assets/img/2_character_pepe/3_jump/J-33.png",
-        "assets/img/2_character_pepe/3_jump/J-34.png",
-        "assets/img/2_character_pepe/3_jump/J-35.png",
-        "assets/img/2_character_pepe/3_jump/J-36.png",
-        "assets/img/2_character_pepe/3_jump/J-37.png",
-        "assets/img/2_character_pepe/3_jump/J-38.png",
-        "assets/img/2_character_pepe/3_jump/J-39.png"
-    ]
-
-
     constructor(position_x, position_y) {
         super(position_x, position_y);
         this.speed = 3;
         this.loadImage("/assets/img/2_character_pepe/2_walk/W-21.png");
         this.loadImages(this.IMAGES_WALKING);
-        this.loadImages(this.IMAGES_JUMPING);
     }
 
-    returnCharacterXPosition() {
-        X = this.x
+    animate() {
+        if (!this.animationInterval) {
+            this.animationInterval = setInterval(() => {
+                let i = this.currentImage % 6;
+                let path = this.IMAGES_WALKING[i];
+                this.img = this.imageCache[path];
+                this.currentImage++;
+            }, 100);
+        }
     }
 
 
+    returnCharacterXPosition(){
+        X=this.x
+    }
+
+    
     walkRight(speed) {
-        this.walkInterval = setInterval(() => {
-            // this.walking_sound.play()
-            if (X < 280)
+        if (!this.walkInterval) {
+            this.walkInterval = setInterval(() => {
+                if(X<280)
                 this.x += speed;
-            this.returnCharacterXPosition()
-        }, 100 / 6);
-        this.movementAnimation(6, this.IMAGES_WALKING)
-        this.otherDirection = false;
+                this.returnCharacterXPosition()
+            }, 1000 / 60);
+            this.otherDirection=false;
+        }
+        this.animate()
     }
-
 
     walkLeft(speed) {
-        this.walkInterval = setInterval(() => {
-            // this.walking_sound.play()
-            if (this.x > 0 && bgX >= 0) {
+        speed=speed;
+        if (!this.walkInterval) {
+            this.walkInterval = setInterval(() => {
+                if(this.x>0 && bgX>=0){
                 this.x -= speed;
                 this.returnCharacterXPosition()
             }
-            this.movementAnimation(6, this.IMAGES_WALKING)
-        }, 100 / 6);
-        this.otherDirection = true;
+            }, 1000 / 60);
+            this.otherDirection=true;
+        }
+        this.animate()
     }
 
     stopWalking() {
         clearInterval(this.walkInterval);
-        clearInterval(this.movement_interval);
-        this.movement_interval = null;
+        clearInterval(this.animationInterval);
+        this.animationInterval = null;
         this.walkInterval = null;
         console.log("cleared")
-    }
 
-
-    jump() {
-        clearInterval(this.gravity_interval)
-        console.log(this.y)
-        if (this.isAboveGround()) {
-            this.jumping_sound.play();
-            this.y = 100;
-            this.movementAnimation(9, this.IMAGES_JUMPING);
-            this.applyGravity();
-        }
-
-        let interval = setInterval(() => {
-            if (!this.isAboveGround()) {
-                clearInterval(this.gravity_interval);
-                this.movementAnimation(6, this.IMAGES_WALKING)
-                clearInterval(this.movement_interval);
-                this.img = this.imageCache[this.IMAGES_JUMPING[0]];
-                this.y = 200;
-                clearInterval(interval);
-            }
-        }, 1000 / 25);
-    }
-
-
-    throw() {
-        this.throwing_sound.play()
     }
 
 
@@ -138,6 +108,8 @@ class Character extends MovableObject {
 
 
 
+
+    
     keyPushed(code) {
         switch (code) {
             case "ArrowLeft":
@@ -150,7 +122,7 @@ class Character extends MovableObject {
                 break;
             case "ArrowUp":
                 this.UP = true;
-                this.jump()
+                console.log("ArrowUp" + this.UP)
                 break;
             case "ArrowDown":
                 this.DOWN = true;
@@ -158,11 +130,11 @@ class Character extends MovableObject {
                 break;
             case "Space":
                 this.SPACE = true;
-                this.throw()
+                console.log("Space" + this.SPACE)
                 break;
-            case "ShiftLeft":
+            case "Shift":
                 this.THROW = true;
-                this.throw()
+                console.log("Shift" + this.THROW)
                 break;
         }
     }
