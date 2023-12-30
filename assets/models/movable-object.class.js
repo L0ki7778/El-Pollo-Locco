@@ -6,6 +6,7 @@ class MovableObject {
     imageCache={};
     width=100;
     height=250;
+    otherDirection = false;
     constructor(x, y,speed) {
         this.x = x;
         this.y = y;

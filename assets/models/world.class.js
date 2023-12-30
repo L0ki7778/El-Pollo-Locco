@@ -1,11 +1,11 @@
 class World {
     ctx;
-    keyoard;
-    character = new Character(50, 200);
-    backgroundOne = new BackgroundOne(0,this.y);
-    backgroundTwo = new BackgroundTwo(0,this.y);
-    backgroundThree = new BackgroundThree(0,this.y);
-    sky=new Sky(0,0);
+    keyboard;
+    character = new Character();
+    backgroundOne = new BackgroundOne(0, this.y);
+    backgroundTwo = new BackgroundTwo(0, this.y);
+    backgroundThree = new BackgroundThree(0, this.y);
+    sky = new Sky(0, 0);
 
     clouds = [
         new Clouds(Math.random() * 700, Math.random() * 150),
@@ -15,39 +15,67 @@ class World {
     ];
 
     enemies = [
-        new Chicken(Math.random() * 500 + 200, 395),
-        new Chicken(Math.random() * 500 + 200, 395),
-        new Chicken(Math.random() * 500 + 200, 395),
+        new Chicken(),
+        new Chicken(),
+        new Chicken()
     ];
 
-    constructor(canvas,keyboard) {
+    constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.draw();
+        this.setWorld()
     }
-    
+
+    setWorld() {
+        this.character.world = this
+    }
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.addDrawing(this.sky);
-        this.addDrawing(this.backgroundThree);
-        this.addDrawing(this.backgroundTwo);
-        this.addDrawing(this.backgroundOne);
-        this.addDrawing(this.character);
-        this.addDrawingArr(this.enemies);
-        this.addDrawingArr(this.clouds);
+        this.addToMap(this.sky);
+        this.addToMap(this.backgroundThree);
+        this.addToMap(this.backgroundTwo);
+        this.addToMap(this.backgroundOne);
+        this.addToMap(this.character);
+        this.addToMapArr(this.enemies);
+        this.addToMapArr(this.clouds);
         requestAnimationFrame(() => {
             this.draw();
         });
     }
 
-    addDrawingArr(objs) {
+    addToMapArr(objs) {
         objs.forEach((obj) => {
-            this.addDrawing(obj);
+            this.addToMap(obj);
         });
     }
 
-    addDrawing(MovableObject) {
+    addToMap(MovableObject) {
+        if (MovableObject.otherDirection) {
+            this.ctx.save();
+            this.ctx.translate(MovableObject.width, 0);
+            this.ctx.scale(-1, 1);
+            MovableObject.x = MovableObject.x * -1;
+        }
         this.ctx.drawImage(MovableObject.img, MovableObject.x, MovableObject.y, MovableObject.width, MovableObject.height);
+        if (MovableObject.otherDirection) {
+            MovableObject.x = MovableObject.x * -1;
+            this.ctx.restore();
+        }
+    }
+
+    flipImage(MovableObject) {
+        this.ctx.save();
+        // this.ctx.translate(MovableObject.width, 0);
+        this.ctx.scale(-1, 1);
+        // MovableObject.x = MovableObject.x * -1; Ich habe den Vorschlag verändert, um auf die transition zu verzichten
+        MovableObject.x = MovableObject.x + MovableObject.width;
+    }
+
+    flipImageBack(MovableObject) {
+        MovableObject.x = MovableObject.x + MovableObject.width;
+        this.ctx.restore();
     }
 }
