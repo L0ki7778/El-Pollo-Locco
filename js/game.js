@@ -1,6 +1,8 @@
 let canvas;
 let world;
-let keyboard = new Keyboard();
+let X;
+let bgX;
+// let keyboard = new Keyboard();
 
 /**
  * Initializes the canvas and sets up the world object.
@@ -13,10 +15,3 @@ function init() {
     canvas.addEventListener('mousemove', showMousePosition);
 }
 
-window.addEventListener("keydown", (event) => {
-    keyboard.keyPushed(event.code);
-})
-
-window.addEventListener("keyup", (event) => {
-    keyboard.keyReleased(event.code);
-})
