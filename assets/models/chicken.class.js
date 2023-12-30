@@ -1,15 +1,12 @@
 class Chicken extends MovableObject {
-    default_y=395;
     shiftInterval
-    shiftSpeed = 2.5;
+    shiftSpeed=2.5;
     IMAGES_WALKING = [
         "/assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
         "/assets/img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
         "/assets/img/3_enemies_chicken/chicken_normal/1_walk/3_w.png",
     ];
     currentImage = 0;
-    alive = true;
-    chicken_sound = new Audio('/assets/audio/chicken.mp3')
 
     constructor(position_x, position_y) {
         super(position_x, position_y);
@@ -19,18 +16,18 @@ class Chicken extends MovableObject {
         this.speed = 0.15 + Math.random() * 0.5;
         this.loadImages(this.IMAGES_WALKING);
         this.animate();
-        this.sound()
-        this.movementAnimation(3, this.IMAGES_WALKING)
     }
 
-
+    animate() {
+        this.moveLeft(this.speed);
+        setInterval(() => {
+            let i = this.currentImage % 3;
+            let path = this.IMAGES_WALKING[i];
+            this.img = this.imageCache[path];
+            this.currentImage++;
+        }, 100);
+    }
     eat() { }
-
-    sound() {
-        if (this.alive = true) {
-            // this.chicken_sound.play()
-        }
-    }
 
     animateRight() {
         this.shiftRight(this.shiftSpeed)
@@ -40,12 +37,12 @@ class Chicken extends MovableObject {
         this.shiftLeft(this.shiftSpeed)
     }
 
-
+    
     shiftRight(speed) {
         if (X >= 280) {
             if (!this.shiftInterval) {
                 this.shiftInterval = setInterval(() => {
-                    this.x -= speed;
+                        this.x -= speed;
                 }, 1000 / 60);
             }
         }
@@ -56,9 +53,8 @@ class Chicken extends MovableObject {
         speed = speed;
         if (!this.shiftInterval) {
             this.shiftInterval = setInterval(() => {
-                if (bgX <= 0) {
-                    this.x += speed;
-                }
+                if(bgX<=0){
+                    this.x += speed;}
             }, 1000 / 60);
         }
     }
@@ -88,6 +84,7 @@ class Chicken extends MovableObject {
             case "ArrowLeft":
                 this.LEFT = false;
                 this.stopAnimation()
+                console.log(this.position_x)
                 break;
             case "ArrowRight":
                 this.RIGHT = false;
