@@ -2,10 +2,23 @@ class World {
     ctx;
     keyoard;
     character = new Character(50, 200);
-    backgroundObjects=level1.backgroundObjects;
+    backgroundOne = new BackgroundOne(0,this.y);
+    backgroundTwo = new BackgroundTwo(0,this.y);
+    backgroundThree = new BackgroundThree(0,this.y);
     sky=new Sky(0,0);
-    clouds =level1.clouds ;
-    enemies = level1.enemies;
+
+    clouds = [
+        new Clouds(Math.random() * 700, Math.random() * 150),
+        new Clouds(Math.random() * 700, Math.random() * 150),
+        new Clouds2(Math.random() * 700, Math.random() * 150),
+        new Clouds2(Math.random() * 700, Math.random() * 150),
+    ];
+
+    enemies = [
+        new Chicken(Math.random() * 500 + 200, 395),
+        new Chicken(Math.random() * 500 + 200, 395),
+        new Chicken(Math.random() * 500 + 200, 395),
+    ];
 
     constructor(canvas,keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -17,7 +30,9 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.addDrawing(this.sky);
-        this.addDrawingArr(this.backgroundObjects);
+        this.addDrawing(this.backgroundThree);
+        this.addDrawing(this.backgroundTwo);
+        this.addDrawing(this.backgroundOne);
         this.addDrawing(this.character);
         this.addDrawingArr(this.enemies);
         this.addDrawingArr(this.clouds);
@@ -33,16 +48,6 @@ class World {
     }
 
     addDrawing(MovableObject) {
-        if(MovableObject.otherDirection){
-           this.flipImage(MovableObject);
-        }
         this.ctx.drawImage(MovableObject.img, MovableObject.x, MovableObject.y, MovableObject.width, MovableObject.height);
-       this.ctx.restore()
-    }
-
-    flipImage(MovableObject) {
-        this.ctx.save();
-        this.ctx.scale(-1, 1);
-        this.ctx.drawImage(MovableObject.img, -MovableObject.x - MovableObject.width, MovableObject.y, MovableObject.width, MovableObject.height);
     }
 }
