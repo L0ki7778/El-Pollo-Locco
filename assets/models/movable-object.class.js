@@ -1,54 +1,22 @@
 
-class MovableObject {
-    x;
-    y;
-    img;
-    imageCache = {};
+class MovableObject extends DrawableObject {
     width = 100;
     height = 250;
-    currentImage = 0;
     otherDirection = false;
     speedY = 0;
     accelearion = 1;
+    energie=100;
+    lastHit=0;
+
     
     constructor(x, y, speed) {
+        super();
         this.x = x;
         this.y = y;
         this.speed = speed;
         this.default_positionY = y;
     }
-
-
-    /**
-     * Loads images from an array of paths and caches them.
-    *
-    * @param {Array} arr - An array of image paths.
-    */
-    loadImages(arr) {
-        arr.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        })
-    }
-
-
-    /**
-     * Loads an image from a given path and caches it.
-    *
-    * @param {string} path - The path of the image to load.
-    */
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
-
-
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-
-    }
-
+   
 
     drawFrame(ctx) {
         if (this instanceof Character || this instanceof Chicken||this instanceof Endboss) {
@@ -126,6 +94,27 @@ class MovableObject {
             this.y < obj.y + obj.height
         );
 
+    }
+
+    isHit() {
+        this.energie-=5;
+        if(this.energie<0){
+            this.energie=0;
+        }else{
+            this.lastHit= new Date().getTime();
+        }
+    }
+
+
+    isHurt() {
+        let timepassed = new Date().getTime() - this.lastHit;
+        timepassed= timepassed/1000;
+        return timepassed<1;
+    }
+
+
+    isDead() {
+        return this.energie==0;
     }
 }
 

@@ -1,5 +1,12 @@
 let backGroundArr = [];
 let cloudArr = [];
+let coins = [];
+
+function fillCoins(){
+    for (let i = 0; i < 10; i++) {
+        coins.push(new Coin(Math.random() * (700) + (i * 50), Math.random() * 100));
+    }
+}
 
 function fill_backgroundObjects(){
     for (let i = 0; i <= 4; i++) {
@@ -19,6 +26,7 @@ function fill_clouds(){
     }
 }
 
+fillCoins();
 fill_backgroundObjects();
 fill_clouds();
 
@@ -32,5 +40,6 @@ const level1 = new Level (
         new Endboss()
     ],
     backGroundArr,
-    cloudArr
+    cloudArr,
+    coins
 )

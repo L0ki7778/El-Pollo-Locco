@@ -1,10 +1,12 @@
 
 class Character extends MovableObject {
     x = 50;
-    y = 100;
+    y = 200;
     default_positionY = 200;
     speed = 5;
     world;
+    isJumping = false;
+    jumpImage = 0;
     walking_sound = new Audio("/assets/audio/step.mp3");
     jumping_sound = new Audio("/assets/audio/jump.mp3");
     throwing_sound = new Audio("/assets/audio/throw.mp3");
@@ -19,22 +21,42 @@ class Character extends MovableObject {
     ];
 
     IMAGES_JUMPING = [
-        "/assets/img/2_character_pepe/3_jump/J-31.png",
-        "/assets/img/2_character_pepe/3_jump/J-32.png",
         "/assets/img/2_character_pepe/3_jump/J-33.png",
+        "/assets/img/2_character_pepe/3_jump/J-34.png",
+        "/assets/img/2_character_pepe/3_jump/J-34.png",
         "/assets/img/2_character_pepe/3_jump/J-34.png",
         "/assets/img/2_character_pepe/3_jump/J-35.png",
         "/assets/img/2_character_pepe/3_jump/J-36.png",
         "/assets/img/2_character_pepe/3_jump/J-37.png",
+        "/assets/img/2_character_pepe/3_jump/J-37.png",
+        "/assets/img/2_character_pepe/3_jump/J-37.png",
         "/assets/img/2_character_pepe/3_jump/J-38.png",
         "/assets/img/2_character_pepe/3_jump/J-39.png"
     ];
+
+    IMAGES_DEAD = [
+        "/assets/img/2_character_pepe/5_dead/D-51.png",
+        "/assets/img/2_character_pepe/5_dead/D-52.png",
+        "/assets/img/2_character_pepe/5_dead/D-53.png",
+        "/assets/img/2_character_pepe/5_dead/D-54.png",
+        "/assets/img/2_character_pepe/5_dead/D-55.png",
+        "/assets/img/2_character_pepe/5_dead/D-56.png",
+        "/assets/img/2_character_pepe/5_dead/D-57.png"
+    ];
+
+    IMAGES_HURT = [
+        "/assets/img/2_character_pepe/4_hurt/H-41.png",
+        "/assets/img/2_character_pepe/4_hurt/H-42.png",
+        "/assets/img/2_character_pepe/4_hurt/H-43.png"
+    ]
 
     constructor() {
         super();
         this.loadImage("/assets/img/2_character_pepe/2_walk/W-21.png");
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
+        this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_DEAD);
         this.animate();
         this.applyGravity();
     }
@@ -60,25 +82,41 @@ class Character extends MovableObject {
 
 
         setInterval(() => {
-            if (this.isAboveGround(this.default_positionY)) {
-                this.playAnimation(this.IMAGES_JUMPING);
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            }
+            else if (this.isJumping) {
+                this.playJumpAnimation(this.IMAGES_JUMPING);
             } else {
                 if (this.world.keyboard.KEY_RIGHT || this.world.keyboard.KEY_LEFT) {
                     console.log("keypressed")
                     this.playAnimation(this.IMAGES_WALKING);
                 }
             }
-        }, 60);
+        }, 80);
     }
 
-
-
-
-
-   
-
     jump() {
-        this.jumping_sound.play();
-        this.speedY = 20;
+        if (!this.isJumping && this.y == this.default_positionY) {
+            this.jumping_sound.play();
+            this.speedY = 20;
+            this.isJumping = true;
+            setTimeout(() => {
+                this.isJumping = false;
+                this.jumpImage = 0;
+            }, 1000);
+        }
+    }
+
+    playJumpAnimation(image) {
+        let i = this.jumpImage % image.length;
+        let path = image[i];
+        this.img = this.imageCache[path];
+        this.jumpImage++;
+        if (i === image.length - 1) {
+            this.isJumping = false;
+        }
     }
 }

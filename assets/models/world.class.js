@@ -4,8 +4,6 @@ class World {
     character = new Character();
     level = level1;
     camera_x = 0;
-    
-
 
 
     constructor(canvas, keyboard) {
@@ -31,7 +29,7 @@ class World {
 
         this.addToMapArr(this.level.backgroundObjects);
         this.addToMapArr(this.level.clouds);
-
+        this.addToMapArr(this.level.coins)
         this.addToMap(this.character);
 
         this.addToMapArr(this.level.enemies);
@@ -82,10 +80,11 @@ class World {
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
-                    console.log("collision" ,enemy)
+                    this.character.isHit();
+                    console.log("collision", enemy)
                 }
             })
-        }, 1000)
+        }, 100)
     }
 
   
