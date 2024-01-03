@@ -11,7 +11,7 @@ class Chicken extends MovableObject {
         this.height = 50;
         this.width = 50;
         this.y=395;
-        this.x=Math.random() * 700;
+        this.x=Math.random() * 700+300;
         this.speed = 0.5 + Math.random() * 1.5;
         this.loadImages(this.IMAGES_WALKING);
         this.animate();
@@ -30,4 +30,8 @@ class Chicken extends MovableObject {
         }, 1000 / 15);
     }
     eat() { }
+
+    getsPlucked(){
+        console.log("hit");
+    }
 }

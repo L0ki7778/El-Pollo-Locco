@@ -58,6 +58,9 @@ class MovableObject extends DrawableObject {
                     clearInterval(gravity_interval)
                 } else {
                     this.stopFalling();
+                    if(this instanceof Character) {
+                        this.isJumping=false;
+                    }
                 }
             }
         }, 1000 / 60);
@@ -81,12 +84,20 @@ class MovableObject extends DrawableObject {
 
     isColliding(obj) {
         return (
-            this.offset.x + this.offset.width > obj.offset.x &&
-            this.offset.y + this.offset.height > obj.offset.y &&
-            this.offset.x < obj.offset.x &&
-            this.offset.y < obj.offset.y + obj.offset.height
+            this.offset.x+this.offset.width > obj.offset.x
+            &&this.offset.x<=obj.offset.x+obj.offset.width
+            &&this.offset.y+this.offset.height>obj.offset.y
+            &&this.offset.y<=obj.offset.y+obj.offset.height         
         );
+    }
 
+    isJumpingUpon(obj){
+        return (
+            this.speedY<=0
+            && this.offset.y +  this.offset.height> obj.offset.y
+            && this.offset.x + this.offset.width> obj.offset.x
+            && this.offset.x < obj.offset.x + obj.offset.width
+            )
     }
 
     isHit() {

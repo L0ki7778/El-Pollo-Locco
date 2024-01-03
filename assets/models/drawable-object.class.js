@@ -49,13 +49,9 @@ class DrawableObject{
             || this instanceof Chicken
             ||this instanceof Endboss
             ||this instanceof ThrowableObject
-            ||this instanceof Coin) {
+            ||this instanceof Bottle) {
             {
-                ctx.beginPath();
-                ctx.strokeStyle = 'blue';
-                ctx.lineWidth = '3';
-                ctx.rect(this.x, this.y, this.width, this.height);
-                ctx.stroke();
+                
                 ctx.beginPath();
                 ctx.strokeStyle = 'red';
                 ctx.lineWidth = '3';

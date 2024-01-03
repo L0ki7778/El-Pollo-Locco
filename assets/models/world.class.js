@@ -3,9 +3,7 @@ class World {
     keyboard;
     character = new Character();
     level = level1;
-    throwableObjects = [
-        new ThrowableObject(),
-    ]
+    throwableObjects = []
     camera_x = 0;
     bars = [
         new HealthBar(),
@@ -39,11 +37,18 @@ class World {
 
         this.addToMapArr(this.level.backgroundObjects);
         this.addToMapArr(this.level.clouds);
-        this.addToMapArr(this.level.coins)
+        // this.addToMapArr(this.level.coins)
+        if (this.level.coins.length > 0) {
+            this.addToMapArr(this.level.coins);
+        }
+        this.addToMapArr(this.level.bottles)
         this.addToMapArr(this.bars);
         this.addToMap(this.character);
         this.ctx.save();
-        this.addToMap(this.throwableObjects[0]);
+
+        if (this.throwableObjects[0]) {
+            this.addToMap(this.throwableObjects[0]);
+        }
         this.ctx.restore();
         this.addToMapArr(this.level.enemies);
 
@@ -65,14 +70,18 @@ class World {
 
 
     addToMap(MovableObject) {
-        if (MovableObject instanceof ThrowableObject) { this.rotateImage(MovableObject) }
-        if (MovableObject.otherDirection) {
-            this.flipImage(MovableObject)
-        }
-        MovableObject.draw(this.ctx)
-        MovableObject.drawFrame(this.ctx);
-        if (MovableObject.otherDirection) {
-            this.flipImageBack(MovableObject)
+        try {
+            if (MovableObject instanceof ThrowableObject) { this.rotateImage(MovableObject) }
+            if (MovableObject.otherDirection) {
+                this.flipImage(MovableObject)
+            }
+            MovableObject.draw(this.ctx)
+            MovableObject.drawFrame(this.ctx);
+            if (MovableObject.otherDirection) {
+                this.flipImageBack(MovableObject)
+            }
+        } catch (err) {
+            console.log(err, MovableObject)
         }
     }
 
@@ -107,19 +116,34 @@ class World {
 
 
     checkCollisions() {
-        // this.enemyCollision()
-        this.coinCollision()
+        this.coinCollision();
+        this.bottleCollision();
+        this.enemyCollision()
     }
 
     coinCollision() {
         setInterval(() => {
             this.level.coins.forEach((coin) => {
                 if (this.character.isColliding(coin)) {
+                    this.coin_sound.play();
                     this.ctx.clearRect(coin.x, coin.y, coin.width, coin.height);
                     this.level.coins.splice(this.level.coins.indexOf(coin), 1);
-                    this.coin_sound.play();
                     this.bars[2].percentage -= 6.25
                     this.bars[2].setPercentage(this.bars[2].percentage)
+                }
+            })
+        }, 10)
+    }
+
+    bottleCollision() {
+        setInterval(() => {
+            this.level.bottles.forEach((bottle) => {
+                if (this.character.isColliding(bottle) && this.throwableObjects.length < 5) {
+                    this.ctx.clearRect(bottle.x, bottle.y, bottle.width, bottle.height);
+                    this.level.bottles.splice(this.level.bottles.indexOf(bottle), 1);
+                    this.throwableObjects.push(new ThrowableObject());
+                    this.bars[1].percentage -= 20;
+                    this.bars[1].setPercentage(this.bars[1].percentage)
                 }
             })
         }, 100)
@@ -128,12 +152,17 @@ class World {
     enemyCollision() {
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
+               if(this.character.isJumping) {
+                if (this.character.isJumpingUpon(enemy) && enemy instanceof Chicken) {
+                    enemy.getsPlucked();
+                    this.level.enemies.splice(this.level.enemies.indexOf(enemy), 1)}
+
+                } else if (this.character.isColliding(enemy)) {
                     this.character.isHit();
                     this.bars[0].setPercentage(this.bars[0].percentage - 20)
-                    console.log("collision", enemy)
+
                 }
             })
-        }, 100)
+        }, 1000 / 120)
     }
 }

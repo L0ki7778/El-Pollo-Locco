@@ -58,5 +58,23 @@ const level1 = new Level (
         new Coin(1850, 150),
         new Coin(1900, 200),
         new Coin(1950, 150)
+    ],
+    bottles=[
+        new Bottle(200,"/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png",30),
+        new Bottle(300,"/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png",30),
+        new Bottle(250,"/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png",30),
+        new Bottle(350,"/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png",20),
+        new Bottle(400,"/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png",20),
+        new Bottle(1100,"/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png",20),
+        new Bottle(1100,"/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png",30)
+        // new Bottle(1050, 100),
+        // new Bottle(1050, 50),
+        // new Bottle(1500, 200),
+        // new Bottle(1550, 200),
+        // new Bottle(1600, 200),
+        // new Bottle(1900, 100),
+        // new Bottle(1850, 150),
+        // new Bottle(1900, 200),
+        // new Bottle(1950, 150)
     ]
 )

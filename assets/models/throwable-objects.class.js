@@ -15,7 +15,7 @@ class ThrowableObject extends MovableObject {
         this.loadImage("assets/img/6_salsa_bottle/salsa_bottle.png");
         this.width = 50;
         this.height = 50;
-        this.updateRotation();
+        // this.updateRotation();
     }
 
     throw(x, y) {
