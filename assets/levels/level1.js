@@ -26,7 +26,7 @@ function fill_clouds(){
     }
 }
 
-fillCoins();
+// fillCoins();
 fill_backgroundObjects();
 fill_clouds();
 
@@ -41,5 +41,22 @@ const level1 = new Level (
     ],
     backGroundArr,
     cloudArr,
-    coins
+    coins=[
+        new Coin(200, 100),
+        new Coin(300, 100),
+        new Coin(250, 50),
+        new Coin(350, 50),
+        new Coin(400, 100),
+        new Coin(1100, 100),
+        new Coin(1100, 50),
+        new Coin(1050, 100),
+        new Coin(1050, 50),
+        new Coin(1500, 200),
+        new Coin(1550, 200),
+        new Coin(1600, 200),
+        new Coin(1900, 100),
+        new Coin(1850, 150),
+        new Coin(1900, 200),
+        new Coin(1950, 150)
+    ]
 )

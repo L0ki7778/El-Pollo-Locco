@@ -33,6 +33,9 @@ function init() {
             case "Shift":
                 keyboard.KEY_THROW = true;
                 break;
+                case "KeyD":
+                keyboard.KEY_THROW = true;
+                break;
         }
     })
     
@@ -54,6 +57,9 @@ function init() {
                 keyboard.KEY_SPACE = false;
                 break;
             case "Shift":
+                keyboard.KEY_THROW = false;
+                break;
+                case "KeyD":
                 keyboard.KEY_THROW = false;
                 break;
         }

@@ -6,6 +6,7 @@ class Character extends MovableObject {
     speed = 5;
     world;
     isJumping = false;
+    isTrowing = false;
     jumpImage = 0;
     walking_sound = new Audio("/assets/audio/step.mp3");
     jumping_sound = new Audio("/assets/audio/jump.mp3");
@@ -27,7 +28,6 @@ class Character extends MovableObject {
         "/assets/img/2_character_pepe/3_jump/J-34.png",
         "/assets/img/2_character_pepe/3_jump/J-35.png",
         "/assets/img/2_character_pepe/3_jump/J-36.png",
-        "/assets/img/2_character_pepe/3_jump/J-37.png",
         "/assets/img/2_character_pepe/3_jump/J-37.png",
         "/assets/img/2_character_pepe/3_jump/J-37.png",
         "/assets/img/2_character_pepe/3_jump/J-38.png",
@@ -61,23 +61,37 @@ class Character extends MovableObject {
         this.applyGravity();
     }
 
+    
     animate() {
         setInterval(() => {
             if (this.world.keyboard.KEY_RIGHT && this.x + this.width / 2 < this.world.level.level_limit) {
-                this.moveRight()
+                this.moveRight();
+                this.takeStatusBars();
                 if (this.y == this.default_positionY) {
                     this.walking_sound.play();
                 }
             }
             if (this.world.keyboard.KEY_LEFT && this.x > 0 + this.width / 2) {
                 this.moveLeft();
+                this.takeStatusBars();
                 this.otherDirection = true;
                 if (this.y == this.default_positionY) { this.walking_sound.play(); }
             }
             if (this.world.keyboard.KEY_UP && this.y == this.default_positionY) {
                 this.jump();
             }
+            if (this.world.keyboard.KEY_THROW) {
+                if (!this.isTrowing) {
+                    this.throw();
+                }
+            }
             this.world.camera_x = -this.x + this.width / 2;
+            this.offset = {
+                width: 40,
+                height: 130,
+                x: this.x+30,
+                y: this.y+100
+            };
         }, 1000 / 60);
 
 
@@ -106,7 +120,7 @@ class Character extends MovableObject {
             setTimeout(() => {
                 this.isJumping = false;
                 this.jumpImage = 0;
-            }, 1000);
+            }, 740);
         }
     }
 
@@ -118,5 +132,20 @@ class Character extends MovableObject {
         if (i === image.length - 1) {
             this.isJumping = false;
         }
+    }
+
+
+    takeStatusBars() {
+        this.world.bars.forEach(element => {
+            element.x = this.x - 40
+        });
+    }
+
+    throw() {
+        this.world.throwableObjects[0].throw(this.x + 30, this.y + 100)
+        this.isTrowing = true;
+        setTimeout(() => {
+            this.isTrowing = false;
+        }, 1000);
     }
 }

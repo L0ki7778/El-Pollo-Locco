@@ -21,11 +21,18 @@ class Coin extends MovableObject {
     constructor(position_x, position_y) {
         super(position_x, position_y);
         this.loadImage("assets/img/8_coin/paint/test0.png");
-        this.width = 170;
-        this.height = 170;
+        this.width = 100;
+        this.height = 100;
         this.loadImages(this.IMAGE_SPINNING);
         this.spin()
     }
+
+    offset = {
+        width: 35,
+        height: 42,
+        x: this.x+32,
+        y: this.y+28
+    };
 
     
 spin(){

@@ -6,6 +6,12 @@ class DrawableObject{
     img;
     imageCache = {};
     currentImage = 0;
+    offset = {
+        width: 0,
+        height: 0,
+        x: 0,
+        y: 0
+    }
 
      /**
      * Loads images from an array of paths and caches them.
@@ -35,6 +41,28 @@ class DrawableObject{
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
 
+    }
+
+
+    drawFrame(ctx) {
+        if (this instanceof Character 
+            || this instanceof Chicken
+            ||this instanceof Endboss
+            ||this instanceof ThrowableObject
+            ||this instanceof Coin) {
+            {
+                ctx.beginPath();
+                ctx.strokeStyle = 'blue';
+                ctx.lineWidth = '3';
+                ctx.rect(this.x, this.y, this.width, this.height);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.strokeStyle = 'red';
+                ctx.lineWidth = '3';
+                ctx.rect(this.offset.x, this.offset.y, this.offset.width, this.offset.height);
+                ctx.stroke();
+            }
+        }
     }
 
 }

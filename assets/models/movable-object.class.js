@@ -5,10 +5,11 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     accelearion = 1;
-    energie=100;
-    lastHit=0;
-
+    energie = 100;
+    lastHit = 0;
     
+
+
     constructor(x, y, speed) {
         super();
         this.x = x;
@@ -16,19 +17,7 @@ class MovableObject extends DrawableObject {
         this.speed = speed;
         this.default_positionY = y;
     }
-   
 
-    drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken||this instanceof Endboss) {
-            {
-                ctx.beginPath();
-                ctx.strokeStyle = 'blue';
-                ctx.lineWidth = '3';
-                ctx.rect(this.x, this.y, this.width, this.height);
-                ctx.stroke();
-            }
-        }
-    }
 
     animate() {
         setInterval(() => {
@@ -59,17 +48,21 @@ class MovableObject extends DrawableObject {
 
 
     applyGravity() {
-        setInterval(() => {
-            if (this.isAboveGround(this.default_positionY) || this.speed) {
+        let gravity_interval = setInterval(() => {
+            if (this.isAboveGround(this.default_positionY) || this.speedY > 0) {
                 this.keepFalling();
             }
             if (!this.isAboveGround(this.default_positionY)) {
                 this.y = this.default_positionY;
-                this.stopFalling()
-                console.log(this.speedY);
+                if (this instanceof ThrowableObject) {
+                    clearInterval(gravity_interval)
+                } else {
+                    this.stopFalling();
+                }
             }
         }, 1000 / 60);
     }
+
 
     keepFalling() {
         this.y -= this.speedY;
@@ -81,48 +74,48 @@ class MovableObject extends DrawableObject {
     }
 
     isAboveGround(default_positionY) {
-        return this.y < default_positionY;
+        return this.y <= default_positionY;
     }
 
 
 
     isColliding(obj) {
         return (
-            this.x + this.width > obj.x &&
-            this.y + this.height > obj.y &&
-            this.x < obj.x &&
-            this.y < obj.y + obj.height
+            this.offset.x + this.offset.width > obj.offset.x &&
+            this.offset.y + this.offset.height > obj.offset.y &&
+            this.offset.x < obj.offset.x &&
+            this.offset.y < obj.offset.y + obj.offset.height
         );
 
     }
 
     isHit() {
-        this.energie-=5;
-        if(this.energie<0){
-            this.energie=0;
-        }else{
-            this.lastHit= new Date().getTime();
+        this.energie -= 5;
+        if (this.energie < 0) {
+            this.energie = 0;
+        } else {
+            this.lastHit = new Date().getTime();
         }
     }
 
 
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
-        timepassed= timepassed/1000;
-        return timepassed<1;
+        timepassed = timepassed / 1000;
+        return timepassed < 1;
     }
 
 
     isDead() {
-        return this.energie==0;
+        return this.energie == 0;
     }
 }
 
 // isColliding(obj) {
 //     return (this.x + this.width) >= obj.x && this.x <= (obj.x + obj.width) &&
 //         (this.y + this.offsetY + this.height) >= obj.y &&
-//         (this.y + this.offsetY) <= (obj.y + obj.height) 
-//             // obj.onCollisionCourse; 
+//         (this.y + this.offsetY) <= (obj.y + obj.height)
+//             // obj.onCollisionCourse;
 //         }
 // Optional: hiermit könnten wir schauen,
 //  ob ein Objekt sich in die richtige Richtung bewegt.
