@@ -1,4 +1,4 @@
-class DrawableObject{
+class DrawableObject {
     x;
     y;
     width = 100;
@@ -13,12 +13,12 @@ class DrawableObject{
         y: 0
     }
 
-     /**
-     * Loads images from an array of paths and caches them.
-    *
-    * @param {Array} arr - An array of image paths.
-    */
-     loadImages(arr) {
+    /**
+    * Loads images from an array of paths and caches them.
+   *
+   * @param {Array} arr - An array of image paths.
+   */
+    loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
             img.src = path;
@@ -45,13 +45,12 @@ class DrawableObject{
 
 
     drawFrame(ctx) {
-        if (this instanceof Character 
-            || this instanceof Chicken
-            ||this instanceof Endboss
-            ||this instanceof ThrowableObject
-            ||this instanceof Bottle) {
+        if (this instanceof Character
+            || this instanceof Endboss
+            || this instanceof ThrowableObject
+            || this instanceof Bottle) {
             {
-                
+
                 ctx.beginPath();
                 ctx.strokeStyle = 'red';
                 ctx.lineWidth = '3';

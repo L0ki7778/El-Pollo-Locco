@@ -5,13 +5,16 @@ class World {
     level = level1;
     throwableObjects = []
     camera_x = 0;
+    splashes=[];
+    globalAlpha = 1;
+    alphaDecrease = 0.01;
+    fadingAlpha=1;
     bars = [
         new HealthBar(),
         new BottleBar(),
         new CoinBar()
     ]
     coin_sound = new Audio("/assets/audio/coin.mp3");
-
 
 
     constructor(canvas, keyboard) {
@@ -23,6 +26,7 @@ class World {
         this.draw();
         this.setWorld();
         this.checkCollisions();
+
     }
 
 
@@ -34,28 +38,51 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);//verschiebt die kamera
-
+        this.ctx.globalAlpha=this.globalAlpha;
         this.addToMapArr(this.level.backgroundObjects);
         this.addToMapArr(this.level.clouds);
-        // this.addToMapArr(this.level.coins)
+        if(this.splashes.length>0){
+            this.splashes.forEach((e)=>{
+                if(e.isFadingOut){
+                    this.ctx.globalAlpha= this.fadingAlpha-this.alphaDecrease;
+                    if(this.ctx.globalAlpha<=0.02){
+                       return this.splashes.splice(this.splashes[0], 1),
+                       this.ctx.globalAlpha=1,this.fadingAlpha=1;
+                    }else{
+                        this.fadingAlpha-=this.alphaDecrease;
+                        this.addToMap(e);
+                        this.ctx.globalAlpha=1;
+
+                    }
+                }else{
+                    this.addToMap(e);
+                }
+            })
+        }
         if (this.level.coins.length > 0) {
             this.addToMapArr(this.level.coins);
         }
         this.addToMapArr(this.level.bottles)
         this.addToMapArr(this.bars);
-        this.addToMap(this.character);
-        this.ctx.save();
 
+        if(this.character.isFadingOut){
+            this.ctx.globalAlpha= this.fadingAlpha-this.alphaDecrease;
+            this.fadingAlpha-=this.alphaDecrease;
+        
+            this.addToMap(this.character);
+        }else{
+            this.addToMap(this.character);
+        }
+        this.ctx.globalAlpha=1;
+        this.addToMapArr(this.level.enemies);
+        this.ctx.save();
         if (this.throwableObjects[0]) {
-            this.addToMap(this.throwableObjects[0]);
+            if(!this.throwableObjects[0].broken){
+                this.addToMap(this.throwableObjects[0]);
+            }
         }
         this.ctx.restore();
-        this.addToMapArr(this.level.enemies);
-
         this.ctx.translate(-this.camera_x, 0);//setzt die kamera zurück
-
-
-
         requestAnimationFrame(() => {
             this.draw();
         });
@@ -101,6 +128,7 @@ class World {
         this.ctx.restore();
     }
 
+
     rotateImage(MovableObject) {
         this.ctx.save();
         this.ctx.translate(
@@ -117,9 +145,11 @@ class World {
 
     checkCollisions() {
         this.coinCollision();
-        this.bottleCollision();
+        this.bottleCollection();
+        this.bottleEnemyCollision();
         this.enemyCollision()
     }
+
 
     coinCollision() {
         setInterval(() => {
@@ -135,7 +165,8 @@ class World {
         }, 10)
     }
 
-    bottleCollision() {
+
+    bottleCollection() {
         setInterval(() => {
             this.level.bottles.forEach((bottle) => {
                 if (this.character.isColliding(bottle) && this.throwableObjects.length < 5) {
@@ -149,20 +180,62 @@ class World {
         }, 100)
     }
 
-    enemyCollision() {
+
+    bottleEnemyCollision() {
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
-               if(this.character.isJumping) {
-                if (this.character.isJumpingUpon(enemy) && enemy instanceof Chicken) {
-                    enemy.getsPlucked();
-                    this.level.enemies.splice(this.level.enemies.indexOf(enemy), 1)}
-
-                } else if (this.character.isColliding(enemy)) {
-                    this.character.isHit();
-                    this.bars[0].setPercentage(this.bars[0].percentage - 20)
-
+                if (this.throwableObjects.length > 0) {
+                    let bottle=this.throwableObjects[0];
+                    if (bottle.isColliding(enemy) && enemy instanceof Chicken) {
+                        this.splashes.push(new Splash(enemy.x,enemy.y));
+                        bottle.break();
+                        this.chickenDies(enemy);
+                        this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
+                    }
                 }
             })
         }, 1000 / 120)
     }
+
+
+    enemyCollision() {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isJumping) {
+                    if (this.character.isJumpingUpon(enemy) && enemy instanceof Chicken) {
+                        if(enemy instanceof Chick){
+                            console.log(enemy)
+                            this.littleChickDies(enemy)
+                        }else{
+                            console.log(enemy)
+                            this.chickenDies(enemy);
+                            this.character.speedY = 5;
+                            this.character.jumpImage=this.character.IMAGES_JUMPING.length-2;
+                        }
+                    }
+                } else if (this.character.isColliding(enemy)) {
+                    this.character.isHit();
+                    this.bars[0].setPercentage(this.bars[0].percentage - 20)
+                }
+            })
+        }, 1000 / 120)
+    }
+
+
+    chickenDies(enemy) {
+        return (enemy.getsPlucked(this.level.enemies.indexOf(enemy)),
+            setTimeout(() => {
+                enemies.splice(this.level.enemies.indexOf(enemy), 1);
+            }, 1000));
+    }
+
+    littleChickDies(enemy) {
+        return (enemy.getsStompedOn(this.level.enemies.indexOf(enemy)),
+            setTimeout(() => {
+                enemies.splice(this.level.enemies.indexOf(enemy), 1);
+            }, 1000));
+    }
+
+   
+
 }

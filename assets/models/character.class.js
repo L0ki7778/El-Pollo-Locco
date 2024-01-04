@@ -6,6 +6,7 @@ class Character extends MovableObject {
     speed = 5;
     default_positionY = 200;
     idleTimeout;
+    isFading = false;
     sleepTimeout = 4000;
     jumpImage = 0;
     isJumping=false;
@@ -28,7 +29,6 @@ class Character extends MovableObject {
     IMAGES_JUMPING = [
         "/assets/img/2_character_pepe/3_jump/J-32.png",
         "/assets/img/2_character_pepe/3_jump/J-34.png",
-
         "/assets/img/2_character_pepe/3_jump/J-34.png",
         "/assets/img/2_character_pepe/3_jump/J-34.png",
         "/assets/img/2_character_pepe/3_jump/J-35.png",
@@ -195,6 +195,4 @@ class Character extends MovableObject {
         this.sleeping_sound.currentTime=0;
         this.startIdleTimer();
     }
-    
-
 }

@@ -100,6 +100,7 @@ class MovableObject extends DrawableObject {
             )
     }
 
+    
     isHit() {
         this.energie -= 5;
         if (this.energie < 0) {

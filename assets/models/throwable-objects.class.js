@@ -2,11 +2,14 @@ class ThrowableObject extends MovableObject {
     throwableObjects = [];
     default_positionY = 600;
     speed = this.speedY;
+    broken=false;
     accelearion = 1;
     rotationX;
     rotationY;
     rotation = 1;
     rotationSpeed = .2;
+
+    
     
     constructor() {
         super();
@@ -15,7 +18,6 @@ class ThrowableObject extends MovableObject {
         this.loadImage("assets/img/6_salsa_bottle/salsa_bottle.png");
         this.width = 50;
         this.height = 50;
-        // this.updateRotation();
     }
 
     throw(x, y) {
@@ -26,15 +28,20 @@ class ThrowableObject extends MovableObject {
         this.applyGravity();
         let throw_interval = setInterval(() => {
             this.x += this.speedX;
-
             this.updateRotation();
-            if (this.y >= this.default_positionY) {
+            if (this.y >= this.default_positionY||this.broken) {
                 this.x += 0
                 clearInterval(throw_interval);
             }
         }, 1000 / 60);
     }
 
+    break(){
+        this.broken = true;
+        setTimeout(() => {
+            this.broken = false;
+        }, 60);
+    }
     updateRotation() {
         this.offset = {
             width: 20,
