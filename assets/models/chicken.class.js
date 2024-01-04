@@ -14,14 +14,14 @@ class Chicken extends MovableObject {
 
     chicken_hit=new Audio("/assets/audio/chicken_hit.mp3");
 
-    constructor() {
+    constructor(i) {
         super();
         this.loadImage("/assets/img/3_enemies_chicken/chicken_normal/1_walk/3_w.png");
         this.height = 50;
         this.width = 50;
         this.y=395;
         this.offsetY=this.y;
-        this.x=Math.random() * 700+300;
+        this.x=(Math.random() * 700+300)*i;
         this.speed = 0.5 + Math.random() * 1.5;
         this.loadImages(this.IMAGES_WALKING);
         this.animate();
@@ -32,12 +32,21 @@ class Chicken extends MovableObject {
        this.animation_interval = setInterval(() => {
             this.moveLeft();
             this.playAnimation(this.IMAGES_WALKING);
-            this.offset = {
-                width: 50,
-                height: 50,
-                x: this.x,
-                y: this.offsetY
-            };
+            if(this instanceof Chick){
+                this.offset = {
+                    width: 25,
+                    height: 50,
+                    x: this.x,
+                    y: this.offsetY
+                };
+            }else{
+                this.offset = {
+                    width: 50,
+                    height: 50,
+                    x: this.x,
+                    y: this.offsetY
+                };
+            }
         }, 1000 / 15);
     }
     eat() { }

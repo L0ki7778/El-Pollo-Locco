@@ -191,6 +191,7 @@ class World {
                         bottle.break();
                         this.chickenDies(enemy);
                         this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
+                        this.throwableObjects.push(new ThrowableObject());
                     }
                 }
             })

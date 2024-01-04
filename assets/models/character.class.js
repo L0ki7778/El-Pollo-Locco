@@ -165,16 +165,19 @@ class Character extends MovableObject {
 
 
     takeStatusBars() {
-        let i = 0;
+        
         this.world.bars.forEach(element => {
-            element.x = this.x - 40 + i
-            i += 220
+            element.x = this.x - 40 
+            
         });
     }
+    
 
     throw() {
+        console.log(this.world.throwableObjects)
         this.world.throwableObjects[0].throw(this.x + 30, this.y + 100)
-        this.world.bars[1].setPercentage(this.world.bars[1].percentage + 20)
+        this.world.bars[1].percentage+=20
+        this.world.bars[1].setPercentage(this.world.bars[1].percentage)
         this.isTrowing = true;
         setTimeout(() => {
             this.world.throwableObjects.pop();

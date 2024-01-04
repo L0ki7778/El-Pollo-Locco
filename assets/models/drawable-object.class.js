@@ -45,10 +45,14 @@ class DrawableObject {
 
 
     drawFrame(ctx) {
-        if (this instanceof Character
-            || this instanceof Endboss
-            || this instanceof ThrowableObject
-            || this instanceof Bottle) {
+        if (
+            // this instanceof Character
+            // || this instanceof Chicken
+            // || 
+            this instanceof Endboss
+            // || this instanceof ThrowableObject
+            // || this instanceof Bottle
+            ) {
             {
 
                 ctx.beginPath();
