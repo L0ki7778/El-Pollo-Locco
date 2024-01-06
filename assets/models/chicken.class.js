@@ -52,13 +52,11 @@ class Chicken extends MovableObject {
     eat() { }
 
     getsPlucked(){
-        console.log("also triggered")
         clearInterval(this.animation_interval);
         this.offset.width=0;
         this.offset.height=0;
         this.offset.y=500;
         this.chicken_hit.play();
         this.loadImage("assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png");
-        console.log("hit");
     }
 }

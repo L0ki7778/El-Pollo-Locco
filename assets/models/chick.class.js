@@ -43,6 +43,5 @@ class Chick extends Chicken{
         this.offset.y=500;
         this.chicken_hit.play();
         this.loadImage("assets/img/3_enemies_chicken/chicken_small/2_dead/dead.png");
-        console.log("hit");
      }
 }

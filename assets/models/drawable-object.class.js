@@ -1,6 +1,7 @@
 class DrawableObject {
     x;
     y;
+    isFadingOut=false;
     width = 100;
     height = 250;
     img;

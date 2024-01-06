@@ -3,11 +3,11 @@ class ThrowableObject extends MovableObject {
     default_positionY = 600;
     speed = this.speedY;
     broken=false;
-    accelearion = 1;
     rotationX;
     rotationY;
     rotation = 1;
     rotationSpeed = .2;
+    collision_sound= new Audio("/assets/audio/glass.mp3")
 
     
     
@@ -38,6 +38,7 @@ class ThrowableObject extends MovableObject {
 
     break(){
         this.broken = true;
+        this.collision_sound.play();
         setTimeout(() => {
             this.broken = false;
         }, 60);

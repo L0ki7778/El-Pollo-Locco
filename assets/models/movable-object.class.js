@@ -1,13 +1,11 @@
 
 class MovableObject extends DrawableObject {
-    width = 100;
-    height = 250;
     otherDirection = false;
-    speedY = 0;
     accelearion = 1;
     energie = 100;
     lastHit = 0;
-    
+    speedY = 0;
+
 
 
     constructor(x, y, speed) {
@@ -15,7 +13,7 @@ class MovableObject extends DrawableObject {
         this.x = x;
         this.y = y;
         this.speed = speed;
-        this.default_positionY = y;
+        this.default_positionY = this.y;
     }
 
 
@@ -43,7 +41,6 @@ class MovableObject extends DrawableObject {
 
     moveLeft() {
         this.x -= this.speed;
-        // this.world.keyboard.KEY_RIGHT = false;
     }
 
 
@@ -58,8 +55,8 @@ class MovableObject extends DrawableObject {
                     clearInterval(gravity_interval)
                 } else {
                     this.stopFalling();
-                    if(this instanceof Character) {
-                        this.isJumping=false;
+                    if (this instanceof Character) {
+                        this.isJumping = false;
                     }
                 }
             }
@@ -84,42 +81,58 @@ class MovableObject extends DrawableObject {
 
     isColliding(obj) {
         return (
-            this.offset.x+this.offset.width > obj.offset.x
-            &&this.offset.x<=obj.offset.x+obj.offset.width
-            &&this.offset.y+this.offset.height>obj.offset.y
-            &&this.offset.y<=obj.offset.y+obj.offset.height         
+            this.offset.x + this.offset.width > obj.offset.x
+            && this.offset.x <= obj.offset.x + obj.offset.width
+            && this.offset.y + this.offset.height > obj.offset.y
+            && this.offset.y <= obj.offset.y + obj.offset.height
         );
     }
 
-    isJumpingUpon(obj){
+    isJumpingUpon(obj) {
         return (
-            this.speedY<=0
-            && this.offset.y +  this.offset.height> obj.offset.y
-            && this.offset.x + this.offset.width> obj.offset.x
+            this.speedY <= 0
+            && this.offset.y + this.offset.height > obj.offset.y
+            && this.offset.x + this.offset.width > obj.offset.x
             && this.offset.x < obj.offset.x + obj.offset.width
-            )
+        )
     }
 
-    
+
     isHit() {
-        this.energie -= 5;
-        if (this.energie < 0) {
-            this.energie = 0;
-        } else {
-            this.lastHit = new Date().getTime();
+        if (this.gotHurt) {
+            return;
+        } else if (!this.gotHurt) {
+            this.health_percentage = this.energie -= 20;
+            this.gotHurt = true;
+            this.dmgAnimation(this);
+            if (this.energie <= 0) {
+                this.energie = 0;
+            }
+
         }
     }
 
-
-    isHurt() {
-        let timepassed = new Date().getTime() - this.lastHit;
-        timepassed = timepassed / 1000;
-        return timepassed < 1;
-    }
+    // isHurt() {
+    //     let timepassed = new Date().getTime() - this.lastHit;
+    //     timepassed = timepassed / 1000;
+    //     this.gotHurt = true;
+    //     return timepassed < 3;
+    // }
 
 
     isDead() {
         return this.energie == 0;
+    }
+
+    dmgAnimation(obj) {
+        let hurt_interval = setInterval(() => {
+            this.playAnimation(obj.IMAGES_HURT);
+            obj.healthBar.setPercentage(obj.health_percentage);
+        }, 1000 / 25);
+        setTimeout(() => {
+            clearInterval(hurt_interval);
+            obj.gotHurt = false;
+        }, 1700);
     }
 }
 

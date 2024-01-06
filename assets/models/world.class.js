@@ -3,12 +3,13 @@ class World {
     keyboard;
     character = new Character();
     level = level1;
+    endBoss = this.level.boss[0];
     throwableObjects = []
     camera_x = 0;
-    splashes=[];
+    splashes = [];
     globalAlpha = 1;
     alphaDecrease = 0.01;
-    fadingAlpha=1;
+    fadingAlpha = 1;
     bars = [
         new HealthBar(),
         new BottleBar(),
@@ -31,30 +32,33 @@ class World {
 
 
     setWorld() {
-        this.character.world = this
+        this.character.world = this;
+        this.character.healthBar = this.bars[0];
+        this.endBoss.character = this.character;
     }
 
 
     draw() {
+        this.clearArrays();
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);//verschiebt die kamera
-        this.ctx.globalAlpha=this.globalAlpha;
+        this.ctx.globalAlpha = this.globalAlpha;
         this.addToMapArr(this.level.backgroundObjects);
         this.addToMapArr(this.level.clouds);
-        if(this.splashes.length>0){
-            this.splashes.forEach((e)=>{
-                if(e.isFadingOut){
-                    this.ctx.globalAlpha= this.fadingAlpha-this.alphaDecrease;
-                    if(this.ctx.globalAlpha<=0.02){
-                       return this.splashes.splice(this.splashes[0], 1),
-                       this.ctx.globalAlpha=1,this.fadingAlpha=1;
-                    }else{
-                        this.fadingAlpha-=this.alphaDecrease;
+        if (this.splashes.length > 0) {
+            this.splashes.forEach((e) => {
+                if (e.isFadingOut) {
+                    this.ctx.globalAlpha = this.fadingAlpha - this.alphaDecrease;
+                    if (this.ctx.globalAlpha <= 0.02) {
+                        return this.splashes.splice(this.splashes[0], 1),
+                            this.ctx.globalAlpha = 1, this.fadingAlpha = 1;
+                    } else {
+                        this.fadingAlpha -= this.alphaDecrease;
                         this.addToMap(e);
-                        this.ctx.globalAlpha=1;
+                        this.ctx.globalAlpha = 1;
 
                     }
-                }else{
+                } else {
                     this.addToMap(e);
                 }
             })
@@ -65,19 +69,20 @@ class World {
         this.addToMapArr(this.level.bottles)
         this.addToMapArr(this.bars);
 
-        if(this.character.isFadingOut){
-            this.ctx.globalAlpha= this.fadingAlpha-this.alphaDecrease;
-            this.fadingAlpha-=this.alphaDecrease;
-        
+        if (this.character.isFadingOut) {
+            this.ctx.globalAlpha = this.fadingAlpha - this.alphaDecrease;
+            this.fadingAlpha -= this.alphaDecrease;
+
             this.addToMap(this.character);
-        }else{
+        } else {
             this.addToMap(this.character);
         }
-        this.ctx.globalAlpha=1;
+        this.ctx.globalAlpha = 1;
         this.addToMapArr(this.level.enemies);
+        this.addToMap(this.endBoss);
         this.ctx.save();
         if (this.throwableObjects[0]) {
-            if(!this.throwableObjects[0].broken){
+            if (!this.throwableObjects[0].broken) {
                 this.addToMap(this.throwableObjects[0]);
             }
         }
@@ -185,9 +190,9 @@ class World {
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
                 if (this.throwableObjects.length > 0) {
-                    let bottle=this.throwableObjects[0];
+                    let bottle = this.throwableObjects[0];
                     if (bottle.isColliding(enemy) && enemy instanceof Chicken) {
-                        this.splashes.push(new Splash(enemy.x,enemy.y));
+                        this.splashes.push(new Splash(enemy.x, enemy.y));
                         bottle.break();
                         this.chickenDies(enemy);
                         this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
@@ -204,19 +209,17 @@ class World {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isJumping) {
                     if (this.character.isJumpingUpon(enemy) && enemy instanceof Chicken) {
-                        if(enemy instanceof Chick){
-                            console.log(enemy)
+                        if (enemy instanceof Chick) {
                             this.littleChickDies(enemy)
-                        }else{
-                            console.log(enemy)
+                        } else {
                             this.chickenDies(enemy);
                             this.character.speedY = 5;
-                            this.character.jumpImage=this.character.IMAGES_JUMPING.length-2;
+                            this.character.jumpImage = this.character.IMAGES_JUMPING.length - 2;
                         }
                     }
                 } else if (this.character.isColliding(enemy)) {
                     this.character.isHit();
-                    this.bars[0].setPercentage(this.bars[0].percentage - 20)
+                    // this.bars[0].setPercentage(this.character.health -= 20)
                 }
             })
         }, 1000 / 120)
@@ -237,6 +240,13 @@ class World {
             }, 1000));
     }
 
-   
+    clearArrays() {
+        this.level.enemies.forEach((e) => {
+            if (e.x+e.width < 0) { e.x=2800 }
+        })
+        this.level.clouds.forEach((e) => {
+            if (e.x+e.width < 0) {e.x=2800 }
+        })
+    }
 
 }

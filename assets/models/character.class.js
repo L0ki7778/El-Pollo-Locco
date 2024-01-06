@@ -3,12 +3,13 @@ class Character extends MovableObject {
     world;
     x = 50;
     y = 200;
-    speed = 5;
+    healthBar;
+    health_percentage;
     default_positionY = 200;
     idleTimeout;
-    isFading = false;
     sleepTimeout = 4000;
     jumpImage = 0;
+    gotHurt=false;
     isJumping=false;
     isTrowing = false;
     isSleeping = false;
@@ -16,7 +17,7 @@ class Character extends MovableObject {
     jumping_sound = new Audio("/assets/audio/jump.mp3");
     throwing_sound = new Audio("/assets/audio/throw.mp3");
     sleeping_sound=new Audio("/assets/audio/sleeping.mp3");
-
+    
     IMAGES_WALKING = [
         "/assets/img/2_character_pepe/2_walk/W-21.png",
         "/assets/img/2_character_pepe/2_walk/W-22.png",
@@ -25,7 +26,7 @@ class Character extends MovableObject {
         "/assets/img/2_character_pepe/2_walk/W-25.png",
         "/assets/img/2_character_pepe/2_walk/W-26.png"
     ];
-
+    
     IMAGES_JUMPING = [
         "/assets/img/2_character_pepe/3_jump/J-32.png",
         "/assets/img/2_character_pepe/3_jump/J-34.png",
@@ -37,7 +38,7 @@ class Character extends MovableObject {
         "/assets/img/2_character_pepe/3_jump/J-38.png",
         "/assets/img/2_character_pepe/3_jump/J-39.png"
     ];
-
+    
     IMAGES_DEAD = [
         "/assets/img/2_character_pepe/5_dead/D-51.png",
         "/assets/img/2_character_pepe/5_dead/D-52.png",
@@ -47,13 +48,13 @@ class Character extends MovableObject {
         "/assets/img/2_character_pepe/5_dead/D-56.png",
         "/assets/img/2_character_pepe/5_dead/D-57.png"
     ];
-
+    
     IMAGES_HURT = [
         "/assets/img/2_character_pepe/4_hurt/H-41.png",
         "/assets/img/2_character_pepe/4_hurt/H-42.png",
         "/assets/img/2_character_pepe/4_hurt/H-43.png"
     ]
-
+    
     IMAGES_SLEEPING = [
         "assets/img/2_character_pepe/1_idle/long_idle/I-11.png",
         "assets/img/2_character_pepe/1_idle/long_idle/I-12.png",
@@ -66,7 +67,7 @@ class Character extends MovableObject {
         "assets/img/2_character_pepe/1_idle/long_idle/I-19.png",
         "assets/img/2_character_pepe/1_idle/long_idle/I-20.png"
     ]
-
+    
     constructor() {
         super();
         this.loadImage("/assets/img/2_character_pepe/2_walk/W-21.png");
@@ -78,9 +79,10 @@ class Character extends MovableObject {
         this.animate();
         this.applyGravity();
         this.resetIdleTimer();
+        this.speed = 5;
     }
-
-
+    
+    
     animate() {
         setInterval(() => {
 
@@ -115,6 +117,7 @@ class Character extends MovableObject {
                 this.resetIdleTimer();
                 if (!this.isTrowing && this.world.throwableObjects.length > 0 && !this.otherDirection) {
                     this.throw();
+                    this.throwing_sound.play()
                 }
             }
             this.world.camera_x = -this.x + this.width / 2;
@@ -130,14 +133,11 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-            }
+            } 
             else if (this.isJumping) {
                 this.playJumpAnimation(this.IMAGES_JUMPING);
             } else {
                 if (this.world.keyboard.KEY_RIGHT || this.world.keyboard.KEY_LEFT) {
-                    console.log("keypressed")
                     this.playAnimation(this.IMAGES_WALKING);
                 }
             }
@@ -146,7 +146,6 @@ class Character extends MovableObject {
 
     jump() {
         if (!this.isJumping && this.y == this.default_positionY) {
-            console.log(this.isJumping)
             this.isJumping = true;
             this.jumping_sound.play();
             this.speedY = 20;
@@ -174,7 +173,6 @@ class Character extends MovableObject {
     
 
     throw() {
-        console.log(this.world.throwableObjects)
         this.world.throwableObjects[0].throw(this.x + 30, this.y + 100)
         this.world.bars[1].percentage+=20
         this.world.bars[1].setPercentage(this.world.bars[1].percentage)
