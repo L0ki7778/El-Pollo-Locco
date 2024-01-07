@@ -9,7 +9,6 @@ class Character extends MovableObject {
     idleTimeout;
     sleepTimeout = 4000;
     jumpImage = 0;
-    gotHurt=false;
     isJumping=false;
     isTrowing = false;
     isSleeping = false;
@@ -96,7 +95,7 @@ class Character extends MovableObject {
             if (this.world.keyboard.KEY_RIGHT && this.x + this.width / 2 < this.world.level.level_limit) {
                 this.resetIdleTimer();
                 this.moveRight();
-                this.takeStatusBars();
+                this.takeStatuscharacterBars(-40);
                 this.isSleeping = false;
                 if (this.y == this.default_positionY) {
                     this.walking_sound.play();
@@ -105,7 +104,7 @@ class Character extends MovableObject {
             if (this.world.keyboard.KEY_LEFT && this.x > 0 + this.width / 2) {
                 this.resetIdleTimer();
                 this.moveLeft();
-                this.takeStatusBars();
+                this.takeStatuscharacterBars(-40);
                 this.otherDirection = true;
                 if (this.y == this.default_positionY) { this.walking_sound.play(); }
             }
@@ -163,19 +162,17 @@ class Character extends MovableObject {
     }
 
 
-    takeStatusBars() {
-        
-        this.world.bars.forEach(element => {
-            element.x = this.x - 40 
-            
+    takeStatuscharacterBars(x) {
+        this.world.characterBars.forEach(element => {
+            element.x = this.x + x  
         });
     }
     
 
     throw() {
         this.world.throwableObjects[0].throw(this.x + 30, this.y + 100)
-        this.world.bars[1].percentage+=20
-        this.world.bars[1].setPercentage(this.world.bars[1].percentage)
+        this.world.characterBars[1].percentage+=20
+        this.world.characterBars[1].setPercentage(this.world.characterBars[1].percentage)
         this.isTrowing = true;
         setTimeout(() => {
             this.world.throwableObjects.pop();

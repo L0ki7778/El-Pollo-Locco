@@ -3,18 +3,20 @@ class World {
     keyboard;
     character = new Character();
     level = level1;
-    endBoss = this.level.boss[0];
     throwableObjects = []
     camera_x = 0;
     splashes = [];
     globalAlpha = 1;
     alphaDecrease = 0.01;
     fadingAlpha = 1;
-    bars = [
-        new HealthBar(),
+    characterBars = [
+        new HealthBar(10),
         new BottleBar(),
         new CoinBar()
-    ]
+    ];
+    bossBar = new BossHealth(2800);
+
+    endBoss = this.level.boss[0];
     coin_sound = new Audio("/assets/audio/coin.mp3");
 
 
@@ -24,22 +26,24 @@ class World {
         this.offsetX = this.canvas.getBoundingClientRect().x;
         this.offsetY = this.canvas.getBoundingClientRect().y;
         this.keyboard = keyboard;
-        this.draw();
         this.setWorld();
+        this.draw();
         this.checkCollisions();
 
-    }
+    };
 
 
     setWorld() {
         this.character.world = this;
-        this.character.healthBar = this.bars[0];
+        this.character.healthBar = this.characterBars[0];
+        this.endBoss.world = this;
         this.endBoss.character = this.character;
-    }
+        this.endBoss.healthBar = this.bossBar;
+    };
 
 
     draw() {
-        this.clearArrays();
+        this.resetSurvingEnemies();
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);//verschiebt die kamera
         this.ctx.globalAlpha = this.globalAlpha;
@@ -56,18 +60,18 @@ class World {
                         this.fadingAlpha -= this.alphaDecrease;
                         this.addToMap(e);
                         this.ctx.globalAlpha = 1;
-
                     }
                 } else {
                     this.addToMap(e);
                 }
             })
-        }
+        };
         if (this.level.coins.length > 0) {
             this.addToMapArr(this.level.coins);
-        }
-        this.addToMapArr(this.level.bottles)
-        this.addToMapArr(this.bars);
+        };
+        this.addToMapArr(this.level.bottles);
+        this.addToMapArr(this.characterBars);
+        this.addToMap(this.bossBar);
 
         if (this.character.isFadingOut) {
             this.ctx.globalAlpha = this.fadingAlpha - this.alphaDecrease;
@@ -76,7 +80,7 @@ class World {
             this.addToMap(this.character);
         } else {
             this.addToMap(this.character);
-        }
+        };
         this.ctx.globalAlpha = 1;
         this.addToMapArr(this.level.enemies);
         this.addToMap(this.endBoss);
@@ -85,7 +89,7 @@ class World {
             if (!this.throwableObjects[0].broken) {
                 this.addToMap(this.throwableObjects[0]);
             }
-        }
+        };
         this.ctx.restore();
         this.ctx.translate(-this.camera_x, 0);//setzt die kamera zurück
         requestAnimationFrame(() => {
@@ -106,15 +110,15 @@ class World {
             if (MovableObject instanceof ThrowableObject) { this.rotateImage(MovableObject) }
             if (MovableObject.otherDirection) {
                 this.flipImage(MovableObject)
-            }
+            };
             MovableObject.draw(this.ctx)
             MovableObject.drawFrame(this.ctx);
             if (MovableObject.otherDirection) {
                 this.flipImageBack(MovableObject)
-            }
+            };
         } catch (err) {
             console.log(err, MovableObject)
-        }
+        };
     }
 
 
@@ -124,14 +128,14 @@ class World {
         this.ctx.scale(-1, 1);
         MovableObject.x = MovableObject.x * -1;
         MovableObject.offset.x = 60 + MovableObject.offset.x * -1;
-    }
+    };
 
 
     flipImageBack(MovableObject) {
         MovableObject.x = MovableObject.x * -1;
         MovableObject.offset.x = 60 + MovableObject.offset.x * -1;
         this.ctx.restore();
-    }
+    };
 
 
     rotateImage(MovableObject) {
@@ -145,15 +149,16 @@ class World {
             -MovableObject.width / 2 - MovableObject.x,
             -MovableObject.height / 2 - MovableObject.y
         );
-    }
+    };
 
 
     checkCollisions() {
         this.coinCollision();
         this.bottleCollection();
         this.bottleEnemyCollision();
-        this.enemyCollision()
-    }
+        this.enemyCollision();
+        this.endBossCollision();
+    };
 
 
     coinCollision() {
@@ -163,12 +168,12 @@ class World {
                     this.coin_sound.play();
                     this.ctx.clearRect(coin.x, coin.y, coin.width, coin.height);
                     this.level.coins.splice(this.level.coins.indexOf(coin), 1);
-                    this.bars[2].percentage -= 6.25
-                    this.bars[2].setPercentage(this.bars[2].percentage)
+                    this.characterBars[2].percentage -= 6.25
+                    this.characterBars[2].setPercentage(this.characterBars[2].percentage)
                 }
             })
         }, 10)
-    }
+    };
 
 
     bottleCollection() {
@@ -178,12 +183,12 @@ class World {
                     this.ctx.clearRect(bottle.x, bottle.y, bottle.width, bottle.height);
                     this.level.bottles.splice(this.level.bottles.indexOf(bottle), 1);
                     this.throwableObjects.push(new ThrowableObject());
-                    this.bars[1].percentage -= 20;
-                    this.bars[1].setPercentage(this.bars[1].percentage)
+                    this.characterBars[1].percentage -= 20;
+                    this.characterBars[1].setPercentage(this.characterBars[1].percentage)
                 }
             })
         }, 100)
-    }
+    };
 
 
     bottleEnemyCollision() {
@@ -197,11 +202,23 @@ class World {
                         this.chickenDies(enemy);
                         this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
                         this.throwableObjects.push(new ThrowableObject());
+                    };
+                    if(bottle.isColliding(this.endBoss)&& !this.endBoss.invincible){
+                        this.endBoss.isHit();
+                        this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
                     }
-                }
+                };
             })
         }, 1000 / 120)
-    }
+    };
+
+    endBossCollision(){
+        setInterval(() => {
+            if (this.character.isColliding(this.endBoss)) {
+                this.character.isHit();
+            };
+        }, 1000 / 120)
+    };
 
 
     enemyCollision() {
@@ -215,38 +232,36 @@ class World {
                             this.chickenDies(enemy);
                             this.character.speedY = 5;
                             this.character.jumpImage = this.character.IMAGES_JUMPING.length - 2;
-                        }
-                    }
+                        };
+                    };
                 } else if (this.character.isColliding(enemy)) {
                     this.character.isHit();
-                    // this.bars[0].setPercentage(this.character.health -= 20)
-                }
+                };
             })
         }, 1000 / 120)
-    }
-
+    };
 
     chickenDies(enemy) {
         return (enemy.getsPlucked(this.level.enemies.indexOf(enemy)),
             setTimeout(() => {
                 enemies.splice(this.level.enemies.indexOf(enemy), 1);
             }, 1000));
-    }
+    };
 
     littleChickDies(enemy) {
         return (enemy.getsStompedOn(this.level.enemies.indexOf(enemy)),
             setTimeout(() => {
                 enemies.splice(this.level.enemies.indexOf(enemy), 1);
             }, 1000));
-    }
+    };
 
-    clearArrays() {
+    resetSurvingEnemies() {
         this.level.enemies.forEach((e) => {
             if (e.x+e.width < 0) { e.x=2800 }
         })
         this.level.clouds.forEach((e) => {
             if (e.x+e.width < 0) {e.x=2800 }
         })
-    }
+    };
 
 }

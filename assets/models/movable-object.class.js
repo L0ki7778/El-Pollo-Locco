@@ -3,6 +3,7 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     accelearion = 1;
     energie = 100;
+    gotHurt = false;
     lastHit = 0;
     speedY = 0;
 
@@ -104,7 +105,7 @@ class MovableObject extends DrawableObject {
         } else if (!this.gotHurt) {
             this.health_percentage = this.energie -= 20;
             this.gotHurt = true;
-            this.dmgAnimation(this);
+            this.dmgAnimation();
             if (this.energie <= 0) {
                 this.energie = 0;
             }
@@ -112,29 +113,31 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    // isHurt() {
-    //     let timepassed = new Date().getTime() - this.lastHit;
-    //     timepassed = timepassed / 1000;
-    //     this.gotHurt = true;
-    //     return timepassed < 3;
-    // }
-
 
     isDead() {
         return this.energie == 0;
     }
 
-    dmgAnimation(obj) {
+    dmgAnimation() {
+        let lastHit = new Date().getTime();
         let hurt_interval = setInterval(() => {
-            this.playAnimation(obj.IMAGES_HURT);
-            obj.healthBar.setPercentage(obj.health_percentage);
+            this.playAnimation(this.IMAGES_HURT);
+            this.healthBar.setPercentage(this.health_percentage);
+            if (this.timepassed(lastHit)) {
+                clearInterval(hurt_interval);
+                this.gotHurt = false;
+            }
         }, 1000 / 25);
-        setTimeout(() => {
-            clearInterval(hurt_interval);
-            obj.gotHurt = false;
-        }, 1700);
+    }
+
+    timepassed(time) {
+        let timepassed = new Date().getTime() - time;
+        timepassed = timepassed / 1000;
+        return (timepassed > 1.5)
     }
 }
+
+
 
 // isColliding(obj) {
 //     return (this.x + this.width) >= obj.x && this.x <= (obj.x + obj.width) &&
