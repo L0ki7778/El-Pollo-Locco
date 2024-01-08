@@ -9,14 +9,14 @@ class Character extends MovableObject {
     idleTimeout;
     sleepTimeout = 4000;
     jumpImage = 0;
-    isJumping=false;
+    isJumping = false;
     isTrowing = false;
     isSleeping = false;
     walking_sound = new Audio("/assets/audio/step.mp3");
     jumping_sound = new Audio("/assets/audio/jump.mp3");
     throwing_sound = new Audio("/assets/audio/throw.mp3");
-    sleeping_sound=new Audio("/assets/audio/sleeping.mp3");
-    
+    sleeping_sound = new Audio("/assets/audio/sleeping.mp3");
+
     IMAGES_WALKING = [
         "/assets/img/2_character_pepe/2_walk/W-21.png",
         "/assets/img/2_character_pepe/2_walk/W-22.png",
@@ -25,7 +25,7 @@ class Character extends MovableObject {
         "/assets/img/2_character_pepe/2_walk/W-25.png",
         "/assets/img/2_character_pepe/2_walk/W-26.png"
     ];
-    
+
     IMAGES_JUMPING = [
         "/assets/img/2_character_pepe/3_jump/J-32.png",
         "/assets/img/2_character_pepe/3_jump/J-34.png",
@@ -37,7 +37,7 @@ class Character extends MovableObject {
         "/assets/img/2_character_pepe/3_jump/J-38.png",
         "/assets/img/2_character_pepe/3_jump/J-39.png"
     ];
-    
+
     IMAGES_DEAD = [
         "/assets/img/2_character_pepe/5_dead/D-51.png",
         "/assets/img/2_character_pepe/5_dead/D-52.png",
@@ -47,13 +47,13 @@ class Character extends MovableObject {
         "/assets/img/2_character_pepe/5_dead/D-56.png",
         "/assets/img/2_character_pepe/5_dead/D-57.png"
     ];
-    
+
     IMAGES_HURT = [
         "/assets/img/2_character_pepe/4_hurt/H-41.png",
         "/assets/img/2_character_pepe/4_hurt/H-42.png",
         "/assets/img/2_character_pepe/4_hurt/H-43.png"
     ]
-    
+
     IMAGES_SLEEPING = [
         "assets/img/2_character_pepe/1_idle/long_idle/I-11.png",
         "assets/img/2_character_pepe/1_idle/long_idle/I-12.png",
@@ -66,7 +66,7 @@ class Character extends MovableObject {
         "assets/img/2_character_pepe/1_idle/long_idle/I-19.png",
         "assets/img/2_character_pepe/1_idle/long_idle/I-20.png"
     ]
-    
+
     constructor() {
         super();
         this.loadImage("/assets/img/2_character_pepe/2_walk/W-21.png");
@@ -80,18 +80,18 @@ class Character extends MovableObject {
         this.resetIdleTimer();
         this.speed = 5;
     }
-    
-    
+
+
     animate() {
         setInterval(() => {
 
-            if(this.isSleeping){
+            if (this.isSleeping) {
                 this.playAnimation(this.IMAGES_SLEEPING);
                 // this.sleeping_sound.play()
             }
         }, 1000 / 3)
         setInterval(() => {
-            
+
             if (this.world.keyboard.KEY_RIGHT && this.x + this.width / 2 < this.world.level.level_limit) {
                 this.resetIdleTimer();
                 this.moveRight();
@@ -132,7 +132,7 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
-            } 
+            }
             else if (this.isJumping) {
                 this.playJumpAnimation(this.IMAGES_JUMPING);
             } else {
@@ -148,9 +148,13 @@ class Character extends MovableObject {
             this.isJumping = true;
             this.jumping_sound.play();
             this.speedY = 20;
-            setTimeout(() => {
-                this.jumpImage = 0;
-            }, 740);
+            let backkOnGround_interval = setInterval(() => {
+                if (this.y == this.default_positionY) {
+                    this.jumpImage = 0;
+                    this.loadImage(this.IMAGES_JUMPING[0]);
+                    clearInterval(backkOnGround_interval);
+                }
+            }, 200);
         }
     }
 
@@ -163,15 +167,16 @@ class Character extends MovableObject {
 
 
     takeStatuscharacterBars(x) {
+        this.world.bossBar.x = this.x + 480
         this.world.characterBars.forEach(element => {
-            element.x = this.x + x  
+            element.x = this.x + x
         });
     }
-    
+
 
     throw() {
         this.world.throwableObjects[0].throw(this.x + 30, this.y + 100)
-        this.world.characterBars[1].percentage+=20
+        this.world.characterBars[1].percentage += 20
         this.world.characterBars[1].setPercentage(this.world.characterBars[1].percentage)
         this.isTrowing = true;
         setTimeout(() => {
@@ -190,7 +195,7 @@ class Character extends MovableObject {
         clearTimeout(this.idleTimeout);
         this.isSleeping = false;
         this.sleeping_sound.pause();
-        this.sleeping_sound.currentTime=0;
+        this.sleeping_sound.currentTime = 0;
         this.startIdleTimer();
     }
 }

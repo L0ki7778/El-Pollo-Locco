@@ -49,6 +49,24 @@ class World {
         this.ctx.globalAlpha = this.globalAlpha;
         this.addToMapArr(this.level.backgroundObjects);
         this.addToMapArr(this.level.clouds);
+        if (this.level.coins.length > 0) {
+            this.addToMapArr(this.level.coins);
+        };
+        this.addToMapArr(this.level.bottles);
+        this.addToMapArr(this.characterBars);
+        this.addToMap(this.bossBar);
+        
+        if (this.character.isFadingOut) {
+            this.ctx.globalAlpha = this.fadingAlpha - this.alphaDecrease;
+            this.fadingAlpha -= this.alphaDecrease;
+            
+            this.addToMap(this.character);
+        } else {
+            this.addToMap(this.character);
+        };
+        this.ctx.globalAlpha = 1;
+        this.addToMapArr(this.level.enemies);
+        this.addToMap(this.endBoss);
         if (this.splashes.length > 0) {
             this.splashes.forEach((e) => {
                 if (e.isFadingOut) {
@@ -66,24 +84,6 @@ class World {
                 }
             })
         };
-        if (this.level.coins.length > 0) {
-            this.addToMapArr(this.level.coins);
-        };
-        this.addToMapArr(this.level.bottles);
-        this.addToMapArr(this.characterBars);
-        this.addToMap(this.bossBar);
-
-        if (this.character.isFadingOut) {
-            this.ctx.globalAlpha = this.fadingAlpha - this.alphaDecrease;
-            this.fadingAlpha -= this.alphaDecrease;
-
-            this.addToMap(this.character);
-        } else {
-            this.addToMap(this.character);
-        };
-        this.ctx.globalAlpha = 1;
-        this.addToMapArr(this.level.enemies);
-        this.addToMap(this.endBoss);
         this.ctx.save();
         if (this.throwableObjects[0]) {
             if (!this.throwableObjects[0].broken) {
@@ -197,15 +197,11 @@ class World {
                 if (this.throwableObjects.length > 0) {
                     let bottle = this.throwableObjects[0];
                     if (bottle.isColliding(enemy) && enemy instanceof Chicken) {
-                        this.splashes.push(new Splash(enemy.x, enemy.y));
-                        bottle.break();
+                        this.bottleBreak(bottle);
                         this.chickenDies(enemy);
-                        this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
-                        this.throwableObjects.push(new ThrowableObject());
-                    };
-                    if(bottle.isColliding(this.endBoss)&& !this.endBoss.invincible){
+                    }else if(bottle.isColliding(this.endBoss)&& !this.endBoss.invincible){
+                        this.bottleBreak(bottle);
                         this.endBoss.isHit();
-                        this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
                     }
                 };
             })
@@ -263,5 +259,12 @@ class World {
             if (e.x+e.width < 0) {e.x=2800 }
         })
     };
+
+    bottleBreak(bottle){
+        this.splashes.push(new Splash(bottle.x+10, bottle.y+30));
+                        bottle.break();
+                        this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
+                        this.throwableObjects.push(new ThrowableObject());
+    }
 
 }

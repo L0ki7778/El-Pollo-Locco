@@ -8,7 +8,6 @@ class MovableObject extends DrawableObject {
     speedY = 0;
 
 
-
     constructor(x, y, speed) {
         super();
         this.x = x;
@@ -119,15 +118,18 @@ class MovableObject extends DrawableObject {
     }
 
     dmgAnimation() {
-        let lastHit = new Date().getTime();
-        let hurt_interval = setInterval(() => {
-            this.playAnimation(this.IMAGES_HURT);
-            this.healthBar.setPercentage(this.health_percentage);
-            if (this.timepassed(lastHit)) {
-                clearInterval(hurt_interval);
-                this.gotHurt = false;
-            }
-        }, 1000 / 25);
+        if (!this.isDead()) {
+            let lastHit = new Date().getTime();
+            let hurt_interval = setInterval(() => {
+                this.playAnimation(this.IMAGES_HURT);
+                this.healthBar.setPercentage(this.health_percentage);
+                if (this.timepassed(lastHit)) {
+                    clearInterval(hurt_interval);
+                    this.gotHurt = false;
+                    if (this instanceof Endboss) this.watchMadAtCharacter()
+                }
+            }, 1000 / 25);
+        }
     }
 
     timepassed(time) {
