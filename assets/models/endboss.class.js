@@ -1,9 +1,8 @@
 class Endboss extends MovableObject {
-    character;
+    world;
     width = 300;
     height = 360;
     active = false;
-    world;
     energie = 200;
     healthBar;
     health_percentage;
@@ -17,6 +16,7 @@ class Endboss extends MovableObject {
         x: this.x + 30,
         y: this.y + 80
     };
+    character;
 
 
     IMAGES_WALKING = [
@@ -57,7 +57,7 @@ class Endboss extends MovableObject {
     ];
 
 
-    IMAGES_DEAD=[
+    IMAGES_DIEING = [
         "assets/img/4_enemie_boss_chicken/5_dead/1.png",
         "assets/img/4_enemie_boss_chicken/5_dead/45-1.png",
         "assets/img/4_enemie_boss_chicken/5_dead/90-1.png",
@@ -76,6 +76,9 @@ class Endboss extends MovableObject {
         "assets/img/4_enemie_boss_chicken/5_dead/270-2.png",
         "assets/img/4_enemie_boss_chicken/5_dead/315-2.png",
         "assets/img/4_enemie_boss_chicken/5_dead/2.png",
+    ]
+
+    IMAGES_DEAD = [
         "assets/img/4_enemie_boss_chicken/5_dead/3.png",
         "assets/img/4_enemie_boss_chicken/5_dead/45-3.png",
         "assets/img/4_enemie_boss_chicken/5_dead/90-3.png",
@@ -83,8 +86,7 @@ class Endboss extends MovableObject {
         "assets/img/4_enemie_boss_chicken/5_dead/180-3.png",
         "assets/img/4_enemie_boss_chicken/5_dead/225-3.png",
         "assets/img/4_enemie_boss_chicken/5_dead/270-3.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/315-3.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/3.png"
+        "assets/img/4_enemie_boss_chicken/5_dead/315-3.png"
     ]
 
 
@@ -109,6 +111,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_LANDING);
         this.loadImages(this.IMAGES_ATTACK_INITIATION);
         this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_DIEING);
         this.loadImages(this.IMAGES_DEAD);
         this.applyGravity();
         this.characterArrives();
@@ -117,15 +120,23 @@ class Endboss extends MovableObject {
 
 
     characterArrives() {
+
         let arrivement_interval = setInterval(() => {
-            if (this.active) {
-                return;
+            try{
+                if (this.active) {
+                    return;
+                }
+                if (this.world.character.x >= 1990) {
+                    console.log(1)
+                    this.active = true;
+                    this.intro();
+                    clearInterval(arrivement_interval);
+                    arrivement_interval = null;
+                };
+
+            }catch(e){
+                console.log(e, this, 2)
             }
-            if (this.world.character.x >= 1990) {
-                this.active = true;
-                this.intro();
-                clearInterval(arrivement_interval);
-            };
         }, 300);
     };
 
@@ -136,8 +147,10 @@ class Endboss extends MovableObject {
             this.playAnimation(this.IMAGES_ALERT);
             i++;
             if (i == 7) {
+                this.IMAGES_ALERT=null;
                 clearInterval(engage_interval);
-                this.loadImage(this.IMAGES_ALERT[7]);
+                engage_interval = null;
+                this.loadImage("/assets/img/4_enemie_boss_chicken/2_alert/G12.png");
                 this.jump();
             };
         }, 500);
@@ -153,28 +166,28 @@ class Endboss extends MovableObject {
             console.log(i)
             i++;
             if (this.preJumpAnimationEnds(i)) {
-                this.bossAttacks(attackPreparation_interval)
+                clearInterval(attackPreparation_interval)
+                attackPreparation_interval = null;
+                this.bossAttacks()
             };
         }, 1000 / 8);
     };
 
 
-    bossAttacks(interval) {
-        clearInterval(interval)
+    bossAttacks() {
         this.speedY = 20;
-        this.bossTakesOff(this.IMAGE_ATTACK,1,60);
+        this.bossTakesOff(this.IMAGE_ATTACK, 1, 60);
     };
 
 
-    bossDies(){
-        this.speedY=20;
-        this.bossTakesOff(this.IMAGES_DEAD,-1,40);
+    bossDies() {
+        this.speedY = 20;
+        this.bossTakesOff(this.IMAGES_DIEING, -1, 40);
     }
 
 
-    landingAnimation(interval) {
+    landingAnimation() {
         let i = 0;
-        clearInterval(interval);
         let landing_interval = setInterval(() => {
             this.playAnimation(this.IMAGES_LANDING);
             i++;
@@ -186,8 +199,11 @@ class Endboss extends MovableObject {
 
 
     watchMadAtCharacter(interval) {
-        if (interval) clearInterval(interval);
-        this.loadImage(this.IMAGES_ALERT[7]);
+        if (interval) {
+            clearInterval(interval);
+            interval = null;
+        }
+        this.loadImage("/assets/img/4_enemie_boss_chicken/2_alert/G12.png");
         this.invincible = false;
         this.moveLeft();
         let moving_interval = setInterval(() => {
@@ -195,35 +211,56 @@ class Endboss extends MovableObject {
             this.keepOffset();
         }, 1000 / 60)
         let walking_interval = setInterval(() => {
-            if(this.isDead()){
+            if (this.isDead()) {
                 clearInterval(walking_interval);
                 clearInterval(moving_interval);
+                walking_interval = null;
+                moving_interval = null;
                 this.bossDies();
-            }else if (this.gotHurt) {
+            } else if (this.gotHurt) {
                 clearInterval(walking_interval);
                 clearInterval(moving_interval);
+                walking_interval = null;
+                moving_interval = null;
             }
             this.playAnimation(this.IMAGES_WALKING);
         }, 1000 / 8)
     };
 
 
-    bossTakesOff(animationCache,multiplicator,frames){
+    bossTakesOff(animationCache, multiplicator, frames) {
         let i = 0;
         let jumpX_interval = setInterval(() => {
             this.keepOffset();
-            this.x = this.x - 8*multiplicator;
+            this.x = this.x - 8 * multiplicator;
             this.playAnimation(animationCache);
-            if(this.isDead()){
+            if (this.isDead()) {
                 i++;
-                if(i == this.IMAGES_DEAD.length-1){
+                if (i == this.IMAGES_DIEING.length - 1) {
                     clearInterval(jumpX_interval);
-                    this.loadImage(this.IMAGES_DEAD[i]);
+                    jumpX_interval = null;
+                    this.deadBoss()
                 }
-            }else if (this.isTouchingGround()) {
-                this.landingAnimation(jumpX_interval, this)
+            } else if (this.isTouchingGround()) {
+                clearInterval(jumpX_interval);
+                jumpX_interval=0;
+                this.landingAnimation()
             };
         }, 1000 / frames);
+    }
+
+
+    deadBoss() {
+        let dead_interval = setInterval(() => {
+            this.playAnimation(this.IMAGES_DEAD);
+            this.default_positionY = 160;
+            if (this.y == this.default_positionY) {
+                clearInterval(dead_interval);
+                dead_interval = null;
+                this.loadImage(this.IMAGES_DEAD[this.IMAGES_DEAD.length - 1]);
+            }
+        }, 1000 / 30)
+
     }
 
 

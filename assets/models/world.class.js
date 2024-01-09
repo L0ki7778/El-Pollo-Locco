@@ -1,5 +1,6 @@
 class World {
     ctx;
+    drawId;
     keyboard;
     character = new Character();
     level = level1;
@@ -16,8 +17,9 @@ class World {
     ];
     bossBar = new BossHealth(2800);
 
-    endBoss = this.level.boss[0];
+    endBoss = new Endboss();
     coin_sound = new Audio("/assets/audio/coin.mp3");
+    bottle_sound = new Audio("/assets/audio/bottle.mp3");
 
 
     constructor(canvas, keyboard) {
@@ -37,7 +39,6 @@ class World {
         this.character.world = this;
         this.character.healthBar = this.characterBars[0];
         this.endBoss.world = this;
-        this.endBoss.character = this.character;
         this.endBoss.healthBar = this.bossBar;
     };
 
@@ -55,11 +56,11 @@ class World {
         this.addToMapArr(this.level.bottles);
         this.addToMapArr(this.characterBars);
         this.addToMap(this.bossBar);
-        
+
         if (this.character.isFadingOut) {
             this.ctx.globalAlpha = this.fadingAlpha - this.alphaDecrease;
             this.fadingAlpha -= this.alphaDecrease;
-            
+
             this.addToMap(this.character);
         } else {
             this.addToMap(this.character);
@@ -92,7 +93,7 @@ class World {
         };
         this.ctx.restore();
         this.ctx.translate(-this.camera_x, 0);//setzt die kamera zurück
-        requestAnimationFrame(() => {
+        this.drawId = requestAnimationFrame(() => {
             this.draw();
         });
     }
@@ -162,80 +163,99 @@ class World {
 
 
     coinCollision() {
-        setInterval(() => {
-            this.level.coins.forEach((coin) => {
-                if (this.character.isColliding(coin)) {
-                    this.coin_sound.play();
-                    this.ctx.clearRect(coin.x, coin.y, coin.width, coin.height);
-                    this.level.coins.splice(this.level.coins.indexOf(coin), 1);
-                    this.characterBars[2].percentage -= 6.25
-                    this.characterBars[2].setPercentage(this.characterBars[2].percentage)
-                }
-            })
-        }, 10)
+        interval.call(this, this.takeCoins, 10)
     };
+
+    takeCoins() {
+        this.level.coins.forEach((coin) => {
+            if (this.character.isColliding(coin)) {
+                this.coin_sound.play();
+                this.ctx.clearRect(coin.x, coin.y, coin.width, coin.height);
+                this.level.coins.splice(this.level.coins.indexOf(coin), 1);
+                this.characterBars[2].percentage -= 6.25
+                this.characterBars[2].setPercentage(this.characterBars[2].percentage)
+            }
+        })
+    }
 
 
     bottleCollection() {
-        setInterval(() => {
-            this.level.bottles.forEach((bottle) => {
-                if (this.character.isColliding(bottle) && this.throwableObjects.length < 5) {
-                    this.ctx.clearRect(bottle.x, bottle.y, bottle.width, bottle.height);
-                    this.level.bottles.splice(this.level.bottles.indexOf(bottle), 1);
-                    this.throwableObjects.push(new ThrowableObject());
-                    this.characterBars[1].percentage -= 20;
-                    this.characterBars[1].setPercentage(this.characterBars[1].percentage)
-                }
-            })
-        }, 100)
+        interval.call(this, this.collectBottles, 10)
     };
+
+    collectBottles() {
+        this.level.bottles.forEach((bottle) => {
+            if (this.character.isColliding(bottle) && this.throwableObjects.length < 5) {
+                this.ctx.clearRect(bottle.x, bottle.y, bottle.width, bottle.height);
+                this.bottle_sound.play();
+                this.level.bottles.splice(this.level.bottles.indexOf(bottle), 1);
+                this.throwableObjects.push(new ThrowableObject());
+                this.characterBars[1].percentage -= 20;
+                this.characterBars[1].setPercentage(this.characterBars[1].percentage)
+            }
+        })
+    }
 
 
     bottleEnemyCollision() {
-        setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.throwableObjects.length > 0) {
-                    let bottle = this.throwableObjects[0];
-                    if (bottle.isColliding(enemy) && enemy instanceof Chicken) {
-                        this.bottleBreak(bottle);
-                        this.chickenDies(enemy);
-                    }else if(bottle.isColliding(this.endBoss)&& !this.endBoss.invincible){
-                        this.bottleBreak(bottle);
-                        this.endBoss.isHit();
-                    }
-                };
-            })
-        }, 1000 / 120)
+        interval.call(this, this.bottleCollides, 10)
+
     };
 
-    endBossCollision(){
-        setInterval(() => {
-            if (this.character.isColliding(this.endBoss)) {
-                this.character.isHit();
+    bottleCollides() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.throwableObjects.length > 0) {
+                let bottle = this.throwableObjects[0];
+                if (bottle.isColliding(enemy) && enemy instanceof Chicken) {
+                    this.bottleBreak(bottle);
+                    this.chickenDies(enemy);
+                } else if (bottle.isColliding(this.endBoss) && !this.endBoss.invincible) {
+                    this.bottleBreak(bottle);
+                    this.endBoss.isHit();
+                }
             };
-        }, 1000 / 120)
+        })
+    }
+
+    endBossCollision() {
+        interval.call(this, this.characterBossInteraction, 10)
     };
 
+    characterBossInteraction() {
+        if (this.bossBehindCharacter()) {
+            this.character.energie = 0;
+            this.character.healthBar.setPercentage(0);
+        }
+        if (this.character.isColliding(this.endBoss)) {
+            this.character.isHit();
+        };
+    }
+
+    bossBehindCharacter() {
+        return (this.endBoss.offset.x + this.endBoss.offset.width < this.character.x);
+    }
 
     enemyCollision() {
-        setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isJumping) {
-                    if (this.character.isJumpingUpon(enemy) && enemy instanceof Chicken) {
-                        if (enemy instanceof Chick) {
-                            this.littleChickDies(enemy)
-                        } else {
-                            this.chickenDies(enemy);
-                            this.character.speedY = 5;
-                            this.character.jumpImage = this.character.IMAGES_JUMPING.length - 2;
-                        };
-                    };
-                } else if (this.character.isColliding(enemy)) {
-                    this.character.isHit();
-                };
-            })
-        }, 1000 / 120)
+        interval.call(this, this.characterEnemyInteraction, 10)
     };
+
+    characterEnemyInteraction() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isJumping) {
+                if (this.character.isJumpingUpon(enemy) && enemy instanceof Chicken) {
+                    if (enemy instanceof Chick) {
+                        this.littleChickDies(enemy)
+                    } else {
+                        this.chickenDies(enemy);
+                        this.character.speedY = 5;
+                        this.character.jumpImage = this.character.IMAGES_JUMPING.length - 2;
+                    };
+                };
+            } else if (this.character.isColliding(enemy)) {
+                this.character.isHit();
+            };
+        })
+    }
 
     chickenDies(enemy) {
         return (enemy.getsPlucked(this.level.enemies.indexOf(enemy)),
@@ -253,18 +273,18 @@ class World {
 
     resetSurvingEnemies() {
         this.level.enemies.forEach((e) => {
-            if (e.x+e.width < 0) { e.x=2800 }
+            if (e.x + e.width < 0) { e.x = 2800 }
         })
         this.level.clouds.forEach((e) => {
-            if (e.x+e.width < 0) {e.x=2800 }
+            if (e.x + e.width < 0) { e.x = 2800 }
         })
     };
 
-    bottleBreak(bottle){
-        this.splashes.push(new Splash(bottle.x+10, bottle.y+30));
-                        bottle.break();
-                        this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
-                        this.throwableObjects.push(new ThrowableObject());
+    bottleBreak(bottle) {
+        this.splashes.push(new Splash(bottle.x + 10, bottle.y + 30));
+        bottle.break();
+        this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
+        this.throwableObjects.push(new ThrowableObject());
     }
 
 }

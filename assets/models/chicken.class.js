@@ -33,23 +33,34 @@ class Chicken extends MovableObject {
             this.moveLeft();
             this.playAnimation(this.IMAGES_WALKING);
             if(this instanceof Chick){
-                this.offset = {
-                    width: 25,
-                    height: 50,
-                    x: this.x,
-                    y: this.offsetY
-                };
+                this.littleChickOffset();
             }else{
-                this.offset = {
-                    width: 50,
-                    height: 50,
-                    x: this.x,
-                    y: this.offsetY
-                };
+               this.chickenOffset()
             }
         }, 1000 / 15);
     }
     eat() { }
+    
+
+    chickenOffset(){
+        this.offset = {
+            width: 50,
+            height: 50,
+            x: this.x,
+            y: this.offsetY
+        };
+        
+    }
+    
+    littleChickOffset(){
+        this.offset = {
+            width: 25,
+            height: 50,
+            x: this.x,
+            y: this.offsetY
+        };
+        
+    }
 
     getsPlucked(){
         clearInterval(this.animation_interval);

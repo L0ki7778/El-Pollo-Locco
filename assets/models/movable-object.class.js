@@ -4,8 +4,9 @@ class MovableObject extends DrawableObject {
     accelearion = 1;
     energie = 100;
     gotHurt = false;
-    lastHit = 0;
     speedY = 0;
+    gravityId;
+
 
 
     constructor(x, y, speed) {
@@ -18,9 +19,7 @@ class MovableObject extends DrawableObject {
 
 
     animate() {
-        setInterval(() => {
-            this.moveLeft()
-        }, 1000 / 60)
+        interval.call(this, this.moveLeft, 1000 / 60)
     }
 
 
@@ -45,22 +44,24 @@ class MovableObject extends DrawableObject {
 
 
     applyGravity() {
-        let gravity_interval = setInterval(() => {
-            if (this.isAboveGround(this.default_positionY) || this.speedY > 0) {
-                this.keepFalling();
-            }
-            if (!this.isAboveGround(this.default_positionY)) {
-                this.y = this.default_positionY;
-                if (this instanceof ThrowableObject) {
-                    clearInterval(gravity_interval)
-                } else {
-                    this.stopFalling();
-                    if (this instanceof Character) {
-                        this.isJumping = false;
-                    }
+        this.gravityId = interval.call(this, this.gravityInterval, 1000 / 60)
+    }
+
+    gravityInterval() {
+        if (this.isAboveGround(this.default_positionY) || this.speedY > 0) {
+            this.keepFalling();
+        }
+        if (!this.isAboveGround(this.default_positionY)) {
+            this.y = this.default_positionY;
+            if (this instanceof ThrowableObject) {
+                clearInterval(intervalIds.splice(intervalIds.indexOf(this.gravityId), 1))
+            } else {
+                this.stopFalling();
+                if (this instanceof Character) {
+                    this.isJumping = false;
                 }
             }
-        }, 1000 / 60);
+        }
     }
 
 
@@ -129,6 +130,16 @@ class MovableObject extends DrawableObject {
                     if (this instanceof Endboss) this.watchMadAtCharacter()
                 }
             }, 1000 / 25);
+        }
+    }
+
+    hurt_interval() {
+        this.playAnimation(this.IMAGES_HURT);
+        this.healthBar.setPercentage(this.health_percentage);
+        if (this.timepassed(this.lastHit)) {
+            clearInterval(hurt_interval);
+            this.gotHurt = false;
+            if (this instanceof Endboss) this.watchMadAtCharacter()
         }
     }
 

@@ -9,3 +9,4 @@ function showMousePosition(event) {
     console.log('Y: ' + mouseY);
   }
   canvas = document.getElementById('canvas');
+  

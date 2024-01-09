@@ -1,5 +1,5 @@
 class Coin extends MovableObject {
-    IMAGE_SPINNING=[
+    IMAGE_SPINNING = [
         "/assets/img/8_coin/paint/test0.png",
         "/assets/img/8_coin/paint/test2.png",
         "/assets/img/8_coin/paint/test3.png",
@@ -30,18 +30,19 @@ class Coin extends MovableObject {
     offset = {
         width: 35,
         height: 42,
-        x: this.x+32,
-        y: this.y+28
+        x: this.x + 32,
+        y: this.y + 28
     };
 
-    
-spin(){
-    setInterval(() => {
+
+    spin() {
+        interval.call(this, this.spinning, 100)
+    }
+
+
+    spinning() {
         this.playAnimation(this.IMAGE_SPINNING);
-    }, 100);
-}
-    
-    
-    
+    }
+
 
 }

@@ -2,6 +2,7 @@ class ThrowableObject extends MovableObject {
     throwableObjects = [];
     default_positionY = 600;
     speed = this.speedY;
+    throwId;
     broken=false;
     rotationX;
     rotationY;
@@ -26,14 +27,16 @@ class ThrowableObject extends MovableObject {
         this.speedY = 23;
         this.speedX = 10;
         this.applyGravity();
-        let throw_interval = setInterval(() => {
-            this.x += this.speedX;
-            this.updateRotation();
-            if (this.y >= this.default_positionY||this.broken) {
-                this.x += 0
-                clearInterval(throw_interval);
-            }
-        }, 1000 / 60);
+        this.throwId = interval.call(this, this.throwInterval, 1000 / 60) 
+    }
+    
+    throwInterval(){
+        this.x += this.speedX;
+        this.updateRotation();
+        if (this.y >= this.default_positionY||this.broken ) {
+            this.x += 0
+            clearInterval(this.throwId);
+        }
     }
 
     break(){

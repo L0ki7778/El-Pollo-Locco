@@ -30,9 +30,11 @@ class Chick extends Chicken{
     
 
     jumping(){
-        setInterval(()=>{
-            this.speedY=Math.round(Math.random()*5);
-        },Math.round(Math.random()*2000)+800)
+        interval.call(this,this.jumpingInterval,Math.round(Math.random()*2000)+800)
+    }
+    
+    jumpingInterval(){
+        this.speedY=Math.round(Math.random()*5);
     }
 
 
