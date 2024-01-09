@@ -64,6 +64,7 @@ class Chicken extends MovableObject {
 
     getsPlucked(){
         clearInterval(this.animation_interval);
+        this.animation_interval=null;
         this.offset.width=0;
         this.offset.height=0;
         this.offset.y=500;

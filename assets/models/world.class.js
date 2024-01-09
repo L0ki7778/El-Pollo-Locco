@@ -16,7 +16,6 @@ class World {
         new CoinBar()
     ];
     bossBar = new BossHealth(2800);
-
     endBoss = new Endboss();
     coin_sound = new Audio("/assets/audio/coin.mp3");
     bottle_sound = new Audio("/assets/audio/bottle.mp3");
@@ -109,14 +108,10 @@ class World {
     addToMap(MovableObject) {
         try {
             if (MovableObject instanceof ThrowableObject) { this.rotateImage(MovableObject) }
-            if (MovableObject.otherDirection) {
-                this.flipImage(MovableObject)
-            };
+            if (MovableObject.otherDirection) this.flipImage(MovableObject);
             MovableObject.draw(this.ctx)
             MovableObject.drawFrame(this.ctx);
-            if (MovableObject.otherDirection) {
-                this.flipImageBack(MovableObject)
-            };
+            if (MovableObject.otherDirection) this.flipImageBack(MovableObject);
         } catch (err) {
             console.log(err, MovableObject)
         };
@@ -166,6 +161,7 @@ class World {
         interval.call(this, this.takeCoins, 10)
     };
 
+
     takeCoins() {
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
@@ -188,6 +184,7 @@ class World {
             if (this.character.isColliding(bottle) && this.throwableObjects.length < 5) {
                 this.ctx.clearRect(bottle.x, bottle.y, bottle.width, bottle.height);
                 this.bottle_sound.play();
+                console.log(bottle)
                 this.level.bottles.splice(this.level.bottles.indexOf(bottle), 1);
                 this.throwableObjects.push(new ThrowableObject());
                 this.characterBars[1].percentage -= 20;
@@ -199,8 +196,8 @@ class World {
 
     bottleEnemyCollision() {
         interval.call(this, this.bottleCollides, 10)
-
     };
+
 
     bottleCollides() {
         this.level.enemies.forEach((enemy) => {
@@ -217,9 +214,11 @@ class World {
         })
     }
 
+
     endBossCollision() {
         interval.call(this, this.characterBossInteraction, 10)
     };
+
 
     characterBossInteraction() {
         if (this.bossBehindCharacter()) {
@@ -231,13 +230,16 @@ class World {
         };
     }
 
+
     bossBehindCharacter() {
         return (this.endBoss.offset.x + this.endBoss.offset.width < this.character.x);
     }
 
+
     enemyCollision() {
         interval.call(this, this.characterEnemyInteraction, 10)
     };
+
 
     characterEnemyInteraction() {
         this.level.enemies.forEach((enemy) => {
@@ -257,6 +259,7 @@ class World {
         })
     }
 
+
     chickenDies(enemy) {
         return (enemy.getsPlucked(this.level.enemies.indexOf(enemy)),
             setTimeout(() => {
@@ -264,12 +267,14 @@ class World {
             }, 1000));
     };
 
+
     littleChickDies(enemy) {
         return (enemy.getsStompedOn(this.level.enemies.indexOf(enemy)),
             setTimeout(() => {
                 enemies.splice(this.level.enemies.indexOf(enemy), 1);
             }, 1000));
     };
+
 
     resetSurvingEnemies() {
         this.level.enemies.forEach((e) => {
@@ -279,6 +284,7 @@ class World {
             if (e.x + e.width < 0) { e.x = 2800 }
         })
     };
+
 
     bottleBreak(bottle) {
         this.splashes.push(new Splash(bottle.x + 10, bottle.y + 30));

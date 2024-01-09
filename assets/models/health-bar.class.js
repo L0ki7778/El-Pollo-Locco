@@ -42,11 +42,10 @@ class BossHealth extends Statusbar {
         "assets/img/7_statusbars/2_statusbar_endboss/0.png",
     ]
 
-    constructor(x) {
+    constructor() {
         super();
         this.loadImages(this.IMAGES_BOSS);
-        this.x = x;
-        this.y = 15;
+        this.y = -40;
         this.setPercentage(200);
     }
 
@@ -63,19 +62,19 @@ class BossHealth extends Statusbar {
             return 1;
         } else if (this.percentage >= 160) {
             return 2;
-        } else if (this.percentage >= 140) {
+        } else if (this.percentage >= 139) {
             return 3;
-        } else if (this.percentage >= 120) {
+        } else if (this.percentage >= 119) {
             return 4;
-        } else if (this.percentage >= 100) {
+        } else if (this.percentage >= 99) {
             return 5;
-        } else if (this.percentage >= 80) {
+        } else if (this.percentage >= 78) {
             return 6;
-        } else if (this.percentage >= 60) {
+        } else if (this.percentage >= 58) {
             return 7;
-        } else if (this.percentage >= 40) {
+        } else if (this.percentage >= 38) {
             return 8;
-        } else if (this.percentage >= 20) {
+        } else if (this.percentage >= 18) {
             return 9;
         } else {
             return 10;

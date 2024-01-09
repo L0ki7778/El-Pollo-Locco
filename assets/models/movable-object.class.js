@@ -6,6 +6,7 @@ class MovableObject extends DrawableObject {
     gotHurt = false;
     speedY = 0;
     gravityId;
+    lastHit;
 
 
 
@@ -48,18 +49,14 @@ class MovableObject extends DrawableObject {
     }
 
     gravityInterval() {
-        if (this.isAboveGround(this.default_positionY) || this.speedY > 0) {
-            this.keepFalling();
-        }
+        if (this.isAboveGround(this.default_positionY) || this.speedY > 0) this.keepFalling();
         if (!this.isAboveGround(this.default_positionY)) {
             this.y = this.default_positionY;
             if (this instanceof ThrowableObject) {
                 clearInterval(intervalIds.splice(intervalIds.indexOf(this.gravityId), 1))
             } else {
                 this.stopFalling();
-                if (this instanceof Character) {
-                    this.isJumping = false;
-                }
+                if (this instanceof Character) this.isJumping = false;
             }
         }
     }
@@ -107,40 +104,49 @@ class MovableObject extends DrawableObject {
             this.gotHurt = true;
             this.dmgAnimation();
             if (this.energie <= 0) {
-                this.energie = 0;
+                this.healthBar.setPercentage(0);
             }
-
         }
     }
 
 
     isDead() {
-        return this.energie == 0;
+        return this.energie <= 0;
     }
 
     dmgAnimation() {
         if (!this.isDead()) {
-            let lastHit = new Date().getTime();
-            let hurt_interval = setInterval(() => {
-                this.playAnimation(this.IMAGES_HURT);
-                this.healthBar.setPercentage(this.health_percentage);
-                if (this.timepassed(lastHit)) {
-                    clearInterval(hurt_interval);
-                    this.gotHurt = false;
-                    if (this instanceof Endboss) this.watchMadAtCharacter()
-                }
-            }, 1000 / 25);
+            this.lastHit = new Date().getTime();
+            this.startDmgAnimation();
         }
     }
 
-    hurt_interval() {
-        this.playAnimation(this.IMAGES_HURT);
-        this.healthBar.setPercentage(this.health_percentage);
-        if (this.timepassed(this.lastHit)) {
-            clearInterval(hurt_interval);
-            this.gotHurt = false;
-            if (this instanceof Endboss) this.watchMadAtCharacter()
-        }
+    startDmgAnimation() {
+        this.hurt_interval = setInterval(() => {
+            this.playAnimation(this.IMAGES_HURT);
+            this.healthBar.setPercentage(this.health_percentage);
+            if (this.timepassed(this.lastHit)) {
+                clearInterval(this.hurt_interval);
+                this.gotHurt = false;
+                if (this instanceof Endboss) {
+                    console.log(this.energie)
+                    if (this.energie == 160) {
+                        this.energie -= 1;
+                        this.clearAllIntervals();
+                        this.jump();
+                    } else if (this.energie == 99) {
+                        this.energie -= 1;
+                        this.clearAllIntervals();
+                        this.jump();
+                    } else if (this.energie == 38) {
+                        this.clearAllIntervals();
+                        this.jump();
+                    } else {
+                        this.watchMadAtCharacter()
+                    };
+                }
+            }
+        }, 1000 / 25);
     }
 
     timepassed(time) {

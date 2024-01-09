@@ -199,6 +199,7 @@ class Character extends MovableObject {
                 this.jumpImage = 0;
                 this.loadImage(this.IMAGES_JUMPING[0]);
                 clearInterval(backkOnGround_interval);
+                backkOnGround_interval = null;
             }
         }, 200);
     }

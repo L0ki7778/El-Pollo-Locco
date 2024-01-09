@@ -10,7 +10,7 @@ class ThrowableObject extends MovableObject {
     rotationSpeed = .2;
     collision_sound= new Audio("/assets/audio/glass.mp3")
 
-    
+
     
     constructor() {
         super();
@@ -21,6 +21,7 @@ class ThrowableObject extends MovableObject {
         this.height = 50;
     }
 
+
     throw(x, y) {
         this.x = x;
         this.y = y;
@@ -29,6 +30,7 @@ class ThrowableObject extends MovableObject {
         this.applyGravity();
         this.throwId = interval.call(this, this.throwInterval, 1000 / 60) 
     }
+
     
     throwInterval(){
         this.x += this.speedX;
@@ -39,6 +41,7 @@ class ThrowableObject extends MovableObject {
         }
     }
 
+
     break(){
         this.broken = true;
         this.collision_sound.play();
@@ -46,6 +49,8 @@ class ThrowableObject extends MovableObject {
             this.broken = false;
         }, 60);
     }
+
+
     updateRotation() {
         this.offset = {
             width: 20,

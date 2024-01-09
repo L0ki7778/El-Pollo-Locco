@@ -21,7 +21,8 @@ class Splash extends MovableObject {
        let splash_interval = setInterval(() => {
             this.playAnimation(this.IMAGES_SPLASH);
             if(this.currentImage == this.IMAGES_SPLASH.length - 1){
-                clearInterval(splash_interval)
+                clearInterval(splash_interval);
+                splash_interval = null;
                 this.isFadingOut=true
             }
         }, 1000 / 30);
