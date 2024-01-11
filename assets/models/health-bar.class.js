@@ -9,15 +9,22 @@ class HealthBar extends Statusbar {
         "assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/40.png",
         "assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/20.png",
         "assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/0.png"
-    ]
+    ];
 
+
+    /**
+     * Constructor for the class.
+     *
+     * @param {type} x - the x coordinate
+     * @return {undefined}
+     */
     constructor(x) {
         super();
         this.loadImages(this.IMAGES);
         this.x = x;
         this.y = 0;
         this.setPercentage(100);
-    }
+    };
 
 }
 
@@ -26,7 +33,6 @@ class BossHealth extends Statusbar {
     height = 35;
     width = 180;
     x;
-
 
     IMAGES_BOSS = [
         "assets/img/7_statusbars/2_statusbar_endboss/200.png",
@@ -40,21 +46,34 @@ class BossHealth extends Statusbar {
         "assets/img/7_statusbars/2_statusbar_endboss/40.png",
         "assets/img/7_statusbars/2_statusbar_endboss/20.png",
         "assets/img/7_statusbars/2_statusbar_endboss/0.png",
-    ]
+    ];
 
+    
     constructor() {
         super();
         this.loadImages(this.IMAGES_BOSS);
         this.y = -40;
         this.setPercentage(200);
-    }
+    };
 
+    
+    /**
+     * Sets the percentage value for the object.
+     *
+     * @param {number} percentage - The new percentage value to set.
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         const path = this.IMAGES_BOSS[this.resolveImageIndex()];
         this.img = this.imageCache[path];
-    }
+    };
 
+    
+    /**
+     * Resolves the image index based on the percentage value.
+     *
+     * @return {number} The index of the image based on the percentage value.
+     */
     resolveImageIndex() {
         if (this.percentage == 200) {
             return 0;
@@ -72,12 +91,12 @@ class BossHealth extends Statusbar {
             return 6;
         } else if (this.percentage >= 58) {
             return 7;
-        } else if (this.percentage >= 38) {
+        } else if (this.percentage >= 36) {
             return 8;
-        } else if (this.percentage >= 18) {
+        } else if (this.percentage >= 17) {
             return 9;
         } else {
             return 10;
         }
-    }
+    };
 }

@@ -12,8 +12,9 @@ class DrawableObject {
         height: 0,
         x: 0,
         y: 0
-    }
+    };
 
+    
     /**
     * Loads images from an array of paths and caches them.
    *
@@ -25,7 +26,7 @@ class DrawableObject {
             img.src = path;
             this.imageCache[path] = img;
         })
-    }
+    };
 
 
     /**
@@ -36,33 +37,17 @@ class DrawableObject {
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
-    }
+    };
 
 
+    /**
+     * Draw the image on the canvas context.
+     *
+     * @param {CanvasRenderingContext2D} ctx - The canvas context to draw on.
+     */
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
 
-    }
-
-
-    drawFrame(ctx) {
-        if (
-            this instanceof Character
-            // || this instanceof Chicken
-            || 
-            this instanceof Endboss
-            // || this instanceof ThrowableObject
-            // || this instanceof Bottle
-            ) {
-            {
-
-                ctx.beginPath();
-                ctx.strokeStyle = 'red';
-                ctx.lineWidth = '3';
-                ctx.rect(this.offset.x, this.offset.y, this.offset.width, this.offset.height);
-                ctx.stroke();
-            }
-        }
-    }
+    };
 
 }

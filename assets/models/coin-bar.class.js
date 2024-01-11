@@ -10,14 +10,21 @@ class CoinBar extends Statusbar {
         "assets/img/7_statusbars/1_statusbar/1_statusbar_coin/orange/100.png"
     ];
 
+
     constructor() {
         super();
         this.loadImages(this.IMAGES);
         this.x = 10;
         this.y = 84;
         this.setPercentage(100);
-    }
+    };
 
+
+    /**
+     * Resolves the image index based on the percentage value.
+     *
+     * @return {number} The index of the image to be displayed.
+     */
     resolveImageIndex() {
         if (this.percentage == 100) {
             return 0;
@@ -32,6 +39,6 @@ class CoinBar extends Statusbar {
         } else  if(this.percentage <= 0) {
             return 5;
         } els
-    }
+    };
     
 }

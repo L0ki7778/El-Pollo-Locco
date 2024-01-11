@@ -5,7 +5,15 @@ class Splash extends MovableObject {
         "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png",
         "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/3_bottle_splash.png",
         "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/4_bottle_splash.png"
-    ]
+    ];
+
+    
+    /**
+     * Creates a new instance of the class.
+     *
+     * @param {type} x - The value of x.
+     * @param {type} y - The value of y.
+     */
     constructor(x,y) {
         super()
         this.x=x;
@@ -15,7 +23,8 @@ class Splash extends MovableObject {
         this.width = 50;
         this.height = 50;
         this.splash();
-    }
+    };
+
 
     splash(){
        let splash_interval = setInterval(() => {
@@ -26,8 +35,6 @@ class Splash extends MovableObject {
                 this.isFadingOut=true
             }
         }, 1000 / 30);
-    }
-
-
+    };
 }
 

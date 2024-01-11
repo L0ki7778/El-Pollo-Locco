@@ -4,6 +4,13 @@ let enemies = [];
 let coins = [];
 let bottles = [];
 
+
+
+/**
+ * Generate an array of Bottle objects filled with specified properties.
+ *
+ * @return {Array<Bottle>} An array of Bottle objects.
+ */
 function fillBottles(){
     return bottles = [
         new Bottle(200, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
@@ -16,9 +23,9 @@ function fillBottles(){
         new Bottle(750, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
         new Bottle(700, "/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 20),
         new Bottle(1100, "/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 20),
-        new Bottle(1100, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
+        new Bottle(1150, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
         new Bottle(1050, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
-        new Bottle(1050, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
+        new Bottle(1000, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
         new Bottle(1500, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
         new Bottle(1550, "/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 30),
         new Bottle(1600, "/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 30),
@@ -27,8 +34,14 @@ function fillBottles(){
         new Bottle(1900, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
         new Bottle(1950, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30)
     ];
-}
+};
 
+
+/**
+ * Generates an array of coin objects and fills it with initial values.
+ *
+ * @return {Array} An array of Coin objects.
+ */
 function fillCoins() {
     return coins = [
         new Coin(200, 100),
@@ -48,8 +61,14 @@ function fillCoins() {
         new Coin(1900, 200),
         new Coin(1950, 150)
     ]
-}
+};
 
+
+/**
+ * Fills the background objects array.
+ *
+ * @return {Array} The filled background objects array.
+ */
 function fillBackgroundObjects() {
     let arr = [];
     for (let i = 0; i <= 4; i++) {
@@ -61,6 +80,12 @@ function fillBackgroundObjects() {
     return backGroundArr = arr;
 };
 
+
+/**
+ * Creates an array of cloud objects and returns it.
+ *
+ * @return {Array} The array of cloud objects.
+ */
 function fillClouds() {
     let arr = [];
     for (let i = 0; i < 6; i++) {
@@ -70,8 +95,14 @@ function fillClouds() {
         arr.push(new Clouds2(Math.random() * (700) + (i * 720), Math.random() * 100));
     }
     return cloudArr = arr;
-}
+};
 
+
+/**
+ * Generates an array of enemies.
+ *
+ * @return {Array} An array of enemy objects.
+ */
 function fillEnemies() {
     let arr = [];
     for (let i = 1; i < 4; i++) {
@@ -85,20 +116,34 @@ function fillEnemies() {
         arr.push(new Chick(i))
     }
     return enemies = arr;
-}
+};
 
 
+/**
+ * Fills the level with coins, background objects, clouds, enemies, and bottles.
+ *
+ * @param {type} paramName - description of parameter
+ * @return {type} description of return value
+ */
 function fillLevel() {
     fillCoins();
     fillBackgroundObjects();
     fillClouds();
     fillEnemies();
     fillBottles();
-}
-
+};
 
 
 fillLevel();
+/**
+ * Resets the level with the given enemies, background array, cloud array, coins, and bottles.
+ *
+ * @param {Array} enemies - The enemies for the level.
+ * @param {Array} backGroundArr - The background array for the level.
+ * @param {Array} cloudArr - The cloud array for the level.
+ * @param {Array} coins - The coins for the level.
+ * @param {Array} bottles - The bottles for the level.
+ */
 function resetLevel(enemies,backGroundArr,cloudArr,coins,bottles) {
     level1 = new Level(
         enemies=enemies,
@@ -107,7 +152,8 @@ function resetLevel(enemies,backGroundArr,cloudArr,coins,bottles) {
         coins=coins,
         bottles=bottles
     )
-}
+};
+
 let level1 = new Level(
     enemies,
     backGroundArr,
@@ -115,5 +161,3 @@ let level1 = new Level(
     coins,
     bottles
 )
-
-

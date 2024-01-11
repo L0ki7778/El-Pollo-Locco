@@ -21,13 +21,20 @@ class Chicken extends MovableObject {
         this.width = 50;
         this.y=395;
         this.offsetY=this.y;
-        this.x=(Math.random() * 700+300)*i;
+        this.x=(Math.random() * 700+300)*i+300;
         this.speed = 0.5 + Math.random() * 1.5;
         this.loadImages(this.IMAGES_WALKING);
         this.animate();
     }
     
 
+    /**
+     * Animates the object by continuously moving it to the left, playing a walking animation,
+     * and adjusting the offset if the object is a Chick.
+     *
+     * @param {type} paramName - description of parameter
+     * @return {type} description of return value
+     */
     animate() {
        this.animation_interval = setInterval(() => {
             this.moveLeft();
@@ -38,10 +45,14 @@ class Chicken extends MovableObject {
                this.chickenOffset()
             }
         }, 1000 / 15);
-    }
-    eat() { }
+    };
     
 
+    /**
+     * Generates the function comment for the given function body.
+     *
+     * @return {void} The function does not return a value.
+     */
     chickenOffset(){
         this.offset = {
             width: 50,
@@ -49,9 +60,15 @@ class Chicken extends MovableObject {
             x: this.x,
             y: this.offsetY
         };
-        
-    }
+    };
     
+
+    /**
+     * Generates the function comment for the given function body.
+     *
+     * @param {} - no parameters
+     * @return {} - no return value
+     */
     littleChickOffset(){
         this.offset = {
             width: 25,
@@ -59,16 +76,19 @@ class Chicken extends MovableObject {
             x: this.x,
             y: this.offsetY
         };
-        
-    }
+    };
 
+
+    /**
+     * Clears the animation interval, resets the offset values, plays a sound if enabled, and loads a new image.
+     */
     getsPlucked(){
         clearInterval(this.animation_interval);
         this.animation_interval=null;
         this.offset.width=0;
         this.offset.height=0;
         this.offset.y=500;
-        this.chicken_hit.play();
+        if(sound==true)this.chicken_hit.play();
         this.loadImage("assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png");
-    }
+    };
 }
