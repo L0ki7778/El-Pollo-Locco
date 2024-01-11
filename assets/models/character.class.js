@@ -126,7 +126,10 @@ class Character extends MovableObject {
      * @param {type} paramName - description of parameter
      * @return {type} description of return value
      */
-    sleeping() { if (this.isSleeping) this.playAnimation(this.IMAGES_SLEEPING) };
+    sleeping() { if (this.isSleeping) {
+        this.playAnimation(this.IMAGES_SLEEPING);
+        if(sound == true) this.sleeping_sound.play();
+    } };
 
 
     /**

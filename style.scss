@@ -431,6 +431,8 @@ span {
     }
 }
 
+
+
 @media only screen and (max-width: 720px) {
 
     #canvas,
@@ -441,7 +443,9 @@ span {
 
     }
 
-    
+    #restart{
+        font-size: 22px;
+    }
 
     #full_screen-btn {
         display: none;
@@ -495,6 +499,33 @@ span {
         display: none;
     }
 
+}
+
+
+@media only screen and (min-width: 450px) and (max-width: 600px){
+
+    #winning-screen{
+        width: 85%;
+        font-size: 25px;
+    }
+
+    #you{
+        left:20px;
+    }
+
+    #restart{
+        font-size: 18px;
+    }
+
+    .restart{
+        height: 13%;
+        width: 40%;
+    }
+
+    #win{
+        right: 20px;
+    }
+    
 }
 
 
