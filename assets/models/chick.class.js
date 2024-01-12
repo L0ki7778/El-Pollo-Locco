@@ -4,21 +4,21 @@ class Chick extends Chicken{
     speed=Math.round(Math.random()*3)+1;
     speedY=0;
     IMAGES_WALKING = [
-        "assets/img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
-        "assets/img/3_enemies_chicken/chicken_small/1_walk/2_w.png",
-        "assets/img/3_enemies_chicken/chicken_small/1_walk/3_w.png"
+        "/El-Pollo-Loco/assets/img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
+        "/El-Pollo-Loco/assets/img/3_enemies_chicken/chicken_small/1_walk/2_w.png",
+        "/El-Pollo-Loco/assets/img/3_enemies_chicken/chicken_small/1_walk/3_w.png"
     ];
 
     IMAGES_DEAD = [
-        "assets/img/3_enemies_chicken/chicken_small/2_dead/dead.png",
-        "assets/img/3_enemies_chicken/chicken_small/2_dead/dead.png",
+        "/El-Pollo-Loco/assets/img/3_enemies_chicken/chicken_small/2_dead/dead.png",
+        "/El-Pollo-Loco/assets/img/3_enemies_chicken/chicken_small/2_dead/dead.png",
     ];
 
-    chicken_hit=new Audio("/assets/audio/chick_hit.mp3");
+    chicken_hit=new Audio("/El-Pollo-Loco/assets/audio/chick_hit.mp3");
 
     constructor(i){
         super(i)
-        this.loadImage("assets/img/3_enemies_chicken/chicken_small/1_walk/1_w.png");
+        this.loadImage("/El-Pollo-Loco/assets/img/3_enemies_chicken/chicken_small/1_walk/1_w.png");
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
         this.height = 25;
@@ -63,6 +63,6 @@ class Chick extends Chicken{
         this.offset.height=0;
         this.offset.y=500;
         if(sound==true)this.chicken_hit.play();
-        this.loadImage("assets/img/3_enemies_chicken/chicken_small/2_dead/dead.png");
+        this.loadImage("/El-Pollo-Loco/assets/img/3_enemies_chicken/chicken_small/2_dead/dead.png");
      };
 }

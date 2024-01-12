@@ -1,6 +1,7 @@
 class World {
     ctx;
     drawId;
+    drawing=false;
     keyboard;
     character = new Character();
     level = level1;
@@ -17,9 +18,9 @@ class World {
     ];
     bossBar = new BossHealth(2800);
     endBoss = new Endboss();
-    coin_sound = new Audio("/assets/audio/coin.mp3");
-    bottle_sound = new Audio("/assets/audio/bottle.mp3");
-    bossHit_sound = new Audio("/assets/audio/bossHit.mp3");
+    coin_sound = new Audio("/El-Pollo-Loco/assets/audio/coin.mp3");
+    bottle_sound = new Audio("/El-Pollo-Loco/assets/audio/bottle.mp3");
+    bossHit_sound = new Audio("/El-Pollo-Loco/assets/audio/bossHit.mp3");
 
 
     constructor(canvas, keyboard) {
@@ -56,6 +57,7 @@ class World {
         this.drawId = requestAnimationFrame(() => {
             this.draw();
         });
+        
     };
 
 
@@ -356,7 +358,6 @@ class World {
             if (this.character.isColliding(bottle) && this.throwableObjects.length < 5) {
                 this.ctx.clearRect(bottle.x, bottle.y, bottle.width, bottle.height);
                 if (sound == true) this.bottle_sound.play();
-                console.log(bottle)
                 this.level.bottles.splice(this.level.bottles.indexOf(bottle), 1);
                 this.throwableObjects.push(new ThrowableObject());
                 this.characterBars[1].percentage -= 20;
@@ -501,7 +502,8 @@ class World {
         } else {
             this.chickenDies(enemy);
             this.character.speedY = 5;
-            this.character.jumpImage = this.character.IMAGES_JUMPING.length - 2;
+            this.hitChicken = true;
+            this.character.endsJumping();
         };
     }
 

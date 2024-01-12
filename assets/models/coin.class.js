@@ -1,21 +1,21 @@
 class Coin extends MovableObject {
     IMAGE_SPINNING = [
-        "/assets/img/8_coin/paint/test0.png",
-        "/assets/img/8_coin/paint/test2.png",
-        "/assets/img/8_coin/paint/test3.png",
-        "/assets/img/8_coin/paint/test4.png",
-        "/assets/img/8_coin/paint/test6.png",
-        "/assets/img/8_coin/paint/test7.png",
-        "/assets/img/8_coin/paint/test8.png",
-        "/assets/img/8_coin/paint/test9.png",
-        "/assets/img/8_coin/paint/test10.png",
-        "/assets/img/8_coin/paint/test9.png",
-        "/assets/img/8_coin/paint/test8.png",
-        "/assets/img/8_coin/paint/test7.png",
-        "/assets/img/8_coin/paint/test6.png",
-        "/assets/img/8_coin/paint/test4.png",
-        "/assets/img/8_coin/paint/test3.png",
-        "/assets/img/8_coin/paint/test2.png",
+        "/El-Pollo-Loco/assets/img/8_coin/paint/test0.png",
+        "/El-Pollo-Loco/assets/img/8_coin/paint/test2.png",
+        "/El-Pollo-Loco/assets/img/8_coin/paint/test3.png",
+        "/El-Pollo-Loco/assets/img/8_coin/paint/test4.png",
+        "/El-Pollo-Loco/assets/img/8_coin/paint/test6.png",
+        "/El-Pollo-Loco/assets/img/8_coin/paint/test7.png",
+        "/El-Pollo-Loco/assets/img/8_coin/paint/test8.png",
+        "/El-Pollo-Loco/assets/img/8_coin/paint/test9.png",
+        "/El-Pollo-Loco/assets/img/8_coin/paint/test10.png",
+        "/El-Pollo-Loco/assets/img/8_coin/paint/test9.png",
+        "/El-Pollo-Loco/assets/img/8_coin/paint/test8.png",
+        "/El-Pollo-Loco/assets/img/8_coin/paint/test7.png",
+        "/El-Pollo-Loco/assets/img/8_coin/paint/test6.png",
+        "/El-Pollo-Loco/assets/img/8_coin/paint/test4.png",
+        "/El-Pollo-Loco/assets/img/8_coin/paint/test3.png",
+        "/El-Pollo-Loco/assets/img/8_coin/paint/test2.png",
     ];
 
     
@@ -28,7 +28,7 @@ class Coin extends MovableObject {
      */
     constructor(position_x, position_y) {
         super(position_x, position_y);
-        this.loadImage("assets/img/8_coin/paint/test0.png");
+        this.loadImage("/El-Pollo-Loco/assets/img/8_coin/paint/test0.png");
         this.width = 100;
         this.height = 100;
         this.loadImages(this.IMAGE_SPINNING);

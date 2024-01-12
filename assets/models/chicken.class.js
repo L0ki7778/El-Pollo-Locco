@@ -2,21 +2,21 @@ class Chicken extends MovableObject {
     animation_interval;
     offsetY;
     IMAGES_WALKING = [
-        "/assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
-        "/assets/img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
-        "/assets/img/3_enemies_chicken/chicken_normal/1_walk/3_w.png",
+        "/El-Pollo-Loco/assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
+        "/El-Pollo-Loco/assets/img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
+        "/El-Pollo-Loco/assets/img/3_enemies_chicken/chicken_normal/1_walk/3_w.png",
     ];
 
     IMAGES_DEAD = [
-        "/assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png",
-        "/assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png"
+        "/El-Pollo-Loco/assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png",
+        "/El-Pollo-Loco/assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png"
     ];
 
-    chicken_hit=new Audio("/assets/audio/chicken_hit.mp3");
+    chicken_hit=new Audio("/El-Pollo-Loco/assets/audio/chicken_hit.mp3");
 
     constructor(i) {
         super();
-        this.loadImage("/assets/img/3_enemies_chicken/chicken_normal/1_walk/3_w.png");
+        this.loadImage("/El-Pollo-Loco/assets/img/3_enemies_chicken/chicken_normal/1_walk/3_w.png");
         this.height = 50;
         this.width = 50;
         this.y=395;
@@ -89,6 +89,6 @@ class Chicken extends MovableObject {
         this.offset.height=0;
         this.offset.y=500;
         if(sound==true)this.chicken_hit.play();
-        this.loadImage("assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png");
+        this.loadImage("/El-Pollo-Loco/assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png");
     };
 }

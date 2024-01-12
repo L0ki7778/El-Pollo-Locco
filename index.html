@@ -5,106 +5,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Pollo Locco</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="/assets/models/world.class.js"></script>
-    <script src="/assets/models/drawable-object.class.js"></script>
-    <script src="/assets/models/movable-object.class.js"></script>
-    <script src="/assets/models/status-bar.class.js"></script>
-    <script src="/assets/models/bottle-bar.class.js"></script>
-    <script src="/assets/models/coin-bar.class.js"></script>
-    <script src="/assets/models/health-bar.class.js"></script>
-    <script src="/assets/models/background.class.js"></script>
-    <script src="/assets/models/clouds.class.js"></script>
-    <script src="/assets/models/character.class.js"></script>
-    <script src="/assets/models/chicken.class.js"></script>
-    <script src="/assets/models/chick.class.js"></script>
-    <script src="/assets/models/endboss.class.js"></script>
-    <script src="/assets/models/coin.class.js"></script>
-    <script src="/assets/models/sky.class.js"></script>
-    <script src="/assets/models/level.class.js"></script>
-    <script src="/assets/models/collectable-bottle.class.js"></script>
-    <script src="/assets/models/keyboard.class.js"></script>
-    <script src="/assets/models/throwable-objects.class.js"></script>
-    <script src="/assets/models/splash.class.js"></script>
-    <script src="/js/game.js"></script>
-    <script src="/assets/levels/level1.js"></script>
-    <script src="/script.js" defer></script>
-    <script src="js/overlay.js" ></script>
-    <link rel="icon" type="image/x-icon" href="/assets/img/2_character_pepe/favicon.png">
+    <link rel="stylesheet" href="/El-Pollo-Loco/style.css">
+    <script src="/El-Pollo-Loco/assets/models/world.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/drawable-object.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/movable-object.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/status-bar.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/bottle-bar.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/coin-bar.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/health-bar.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/background.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/clouds.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/character.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/chicken.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/chick.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/endboss.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/coin.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/sky.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/level.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/collectable-bottle.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/keyboard.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/throwable-objects.class.js"></script>
+    <script src="/El-Pollo-Loco/assets/models/splash.class.js"></script>
+    <script src="/El-Pollo-Loco/js/game.js"></script>
+    <script src="/El-Pollo-Loco/assets/levels/level1.js"></script>
+    <script src="/El-Pollo-Loco/script.js" defer></script>
+    <script src="/El-Pollo-Loco/js/overlay.js" ></script>
+    <link rel="icon" type="image/x-icon" href="/El-Pollo-Loco/assets/img/2_character_pepe/favicon.png">
 </head>
 
 <body onload="mobileListener()">
     <h1>EL POLLO LOCO</h1>
-    <img id="background" src="/assets/img/5_background/background.jpg" alt="">
+    <img id="background" src="/El-Pollo-Loco/assets/img/5_background/background.jpg" alt="">
     <div id="startScreen">
         <div class="turn-device">
             <div class="turn-text">PLEASE SWITCH TO LANDSCAPE MODE TO PLAY</div>
-            <img class="turn-img" src="/assets/img/10_interaction/landscape.png" alt="">
+            <img class="turn-img" src="/El-Pollo-Loco/assets/img/10_interaction/landscape.png" alt="">
         </div>
         <div id="overlay" class="overlay d-none">
             <div class="menu">
                 <img class="menu-btn" onclick="changeMusic('music-btn')" id="music-btn"
-                    src="/assets/img/10_interaction/music.png" alt="">
+                    src="/El-Pollo-Loco/assets/img/10_interaction/music.png" alt="">
                 <img class="menu-btn" onclick="changeSound('sound-btn')" id="sound-btn"
-                    src="/assets/img/10_interaction/speaker.png" alt="">
+                    src="/El-Pollo-Loco/assets/img/10_interaction/speaker.png" alt="">
             </div>
             <div onclick="init()" class="restart">PLAY</div>
         </div>
-        <img onclick="openMenu()" class="settings" src="/assets/img/10_interaction/settings.png" alt="">
+        <img onclick="openMenu()" class="settings" src="/El-Pollo-Loco/assets/img/10_interaction/settings.png" alt="">
         <div class="play" onclick="init()">
             PLAY
-            <img id="play-btn" src="assets/img/10_interaction/play.png" alt="">
+            <img id="play-btn" src="/El-Pollo-Loco/assets/img/10_interaction/play.png" alt="">
         </div>
         <div class="keys-start_screen">
-            <div><img class="arrow" src="/assets/img/10_interaction/arrowLeft.png" /> :LEFT</div>
-            <div><img class="arrow" src="/assets/img/10_interaction/arrowRight.png" /> :RIGHT</div>
-            <div><img class="arrow" src="/assets/img/10_interaction/arrowUp.png" /> :JUMP</div>
+            <div><img class="arrow" src="/El-Pollo-Loco/assets/img/10_interaction/arrowLeft.png" /> :LEFT</div>
+            <div><img class="arrow" src="/El-Pollo-Loco/assets/img/10_interaction/arrowRight.png" /> :RIGHT</div>
+            <div><img class="arrow" src="/El-Pollo-Loco/assets/img/10_interaction/arrowUp.png" /> :JUMP</div>
             <div>
                 <p id="letter">D</p>:THROW
             </div>
         </div>
-        <img id="start_screen-background" src="/assets/img/9_intro_outro_screens/start/startscreen_1.png" alt="">
+        <img id="start_screen-background" src="/El-Pollo-Loco/assets/img/9_intro_outro_screens/start/startscreen_1.png" alt="">
     </div>
     <div id="screen" width="720" height="480" class="canvas d-none">
         <div class="turn-device">
             <div class="turn-text">PLEASE SWITCH TO LANDSCAPE MODE TO PLAY</div>
-            <img class="turn-img" src="/assets/img/10_interaction/landscape.png" alt="">
+            <img class="turn-img" src="/El-Pollo-Loco/assets/img/10_interaction/landscape.png" alt="">
         </div>
         <div id="game-overlay" class="d-none overlay">
             <div class="menu">
                 <img class="menu-btn" onclick="changeMusic('game-music-btn')" id="game-music-btn"
-                    src="/assets/img/10_interaction/music.png" alt="">
+                    src="/El-Pollo-Loco/assets/img/10_interaction/music.png" alt="">
                 <img class="menu-btn" onclick="changeSound('game-sound-btn')" id="game-sound-btn"
-                    src="/assets/img/10_interaction/speaker.png" alt="">
+                    src="/El-Pollo-Loco/assets/img/10_interaction/speaker.png" alt="">
                 <img class="menu-btn" onclick="fullScreen(),restartGame()" id="full_screen-btn"
-                    src="/assets/img/10_interaction/fullScreen.png" alt="">
+                    src="/El-Pollo-Loco/assets/img/10_interaction/fullScreen.png" alt="">
             </div>
             <div onclick="restartGame()" class="restart">RESTART</div>
         </div>
-        <img onclick="openGameMenu()" class="settings" src="/assets/img/10_interaction/settings.png" alt="">
+        <img onclick="openGameMenu()" class="settings" src="/El-Pollo-Loco/assets/img/10_interaction/settings.png" alt="">
         <canvas id="canvas" width="720" height="480"></canvas>
         <div class="mobile ">
             <div id="left-hand" class="row">
                 <div class="mobile-btn" id="left">
-                    <img src="/assets/img/10_interaction/arrowLeft.png" alt="">
+                    <img src="/El-Pollo-Loco/assets/img/10_interaction/arrowLeft.png" alt="">
                 </div>
                 <div class="mobile-btn" id="right">
-                    <img src="/assets/img/10_interaction/arrowRight.png" alt="">
+                    <img src="/El-Pollo-Loco/assets/img/10_interaction/arrowRight.png" alt="">
                 </div>
             </div>
             <div id="right-hand" class="row">
                 <div class="mobile-btn" id="jump">
-                    <img src="/assets/img/10_interaction/arrowUp.png" alt="">
+                    <img src="/El-Pollo-Loco/assets/img/10_interaction/arrowUp.png" alt="">
                 </div>
                 <div class="mobile-btn" id="throw">
-                    <img src="assets/img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png" alt="">
+                    <img src="/El-Pollo-Loco/assets/img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png" alt="">
                 </div>
             </div>
         </div>
         <div class="keys">
-            <div><img src="/assets/img/10_interaction/arrowLeft.png" /> :LEFT</div>
-            <div><img src="/assets/img/10_interaction/arrowRight.png" /> :RIGHT</div>
-            <div><img src="/assets/img/10_interaction/arrowUp.png" /> :JUMP</div>
+            <div><img src="/El-Pollo-Loco/assets/img/10_interaction/arrowLeft.png" /> :LEFT</div>
+            <div><img src="/El-Pollo-Loco/assets/img/10_interaction/arrowRight.png" /> :RIGHT</div>
+            <div><img src="/El-Pollo-Loco/assets/img/10_interaction/arrowUp.png" /> :JUMP</div>
             <div>D:THROW</div>
         </div>
     </div>

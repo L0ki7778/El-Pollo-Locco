@@ -13,26 +13,26 @@ let bottles = [];
  */
 function fillBottles(){
     return bottles = [
-        new Bottle(200, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
-        new Bottle(300, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
-        new Bottle(250, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
-        new Bottle(350, "/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 20),
-        new Bottle(400, "/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 20),
-        new Bottle(600, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
-        new Bottle(650, "/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 20),
-        new Bottle(750, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
-        new Bottle(700, "/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 20),
-        new Bottle(1100, "/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 20),
-        new Bottle(1150, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
-        new Bottle(1050, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
-        new Bottle(1000, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
-        new Bottle(1500, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
-        new Bottle(1550, "/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 30),
-        new Bottle(1600, "/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 30),
-        new Bottle(1800, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
-        new Bottle(1850, "/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 30),
-        new Bottle(1900, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
-        new Bottle(1950, "/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30)
+        new Bottle(200, "/El-Pollo-Loco/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
+        new Bottle(300, "/El-Pollo-Loco/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
+        new Bottle(250, "/El-Pollo-Loco/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
+        new Bottle(350, "/El-Pollo-Loco/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 20),
+        new Bottle(400, "/El-Pollo-Loco/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 20),
+        new Bottle(600, "/El-Pollo-Loco/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
+        new Bottle(650, "/El-Pollo-Loco/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 20),
+        new Bottle(750, "/El-Pollo-Loco/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
+        new Bottle(700, "/El-Pollo-Loco/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 20),
+        new Bottle(1100, "/El-Pollo-Loco/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 20),
+        new Bottle(1150, "/El-Pollo-Loco/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
+        new Bottle(1050, "/El-Pollo-Loco/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
+        new Bottle(1000, "/El-Pollo-Loco/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
+        new Bottle(1500, "/El-Pollo-Loco/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
+        new Bottle(1550, "/El-Pollo-Loco/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 30),
+        new Bottle(1600, "/El-Pollo-Loco/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 30),
+        new Bottle(1800, "/El-Pollo-Loco/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
+        new Bottle(1850, "/El-Pollo-Loco/assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png", 30),
+        new Bottle(1900, "/El-Pollo-Loco/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30),
+        new Bottle(1950, "/El-Pollo-Loco/assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png", 30)
     ];
 };
 

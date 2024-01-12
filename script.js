@@ -47,10 +47,10 @@ function openGameMenu() {
 function checkButtons() {
   let soundBtn = document.getElementById('game-sound-btn');
   let musicBtn = document.getElementById('game-music-btn');
-  if (sound == true) { sound.src = "/assets/img/10_interaction/speaker.png"; }
-  else { soundBtn.src = "/assets/img/10_interaction/mute.png"; }
-  if (music == true) { music.src = "/assets/img/10_interaction/music.png"; }
-  else { musicBtn.src = "/assets/img/10_interaction/noMusic.png"; };
+  if (sound == true) { sound.src = "/El-Pollo-Loco/assets/img/10_interaction/speaker.png"; }
+  else { soundBtn.src = "/El-Pollo-Loco/assets/img/10_interaction/mute.png"; }
+  if (music == true) { music.src = "/El-Pollo-Loco/assets/img/10_interaction/music.png"; }
+  else { musicBtn.src = "/El-Pollo-Loco/assets/img/10_interaction/noMusic.png"; };
 };
 
 
@@ -73,13 +73,12 @@ function closeGameMenu() {
  */
 function changeSound(id) {
   let btn = document.getElementById(id);
-  console.log(btn.src.slice(-11))
   if (btn.src.slice(-11) == "speaker.png") {
     sound = false;
-    btn.src = "/assets/img/10_interaction/mute.png";
+    btn.src = "/El-Pollo-Loco/assets/img/10_interaction/mute.png";
   } else {
     sound = true;
-    btn.src = "/assets/img/10_interaction/speaker.png";
+    btn.src = "/El-Pollo-Loco/assets/img/10_interaction/speaker.png";
   }
 };
 
@@ -92,16 +91,15 @@ function changeSound(id) {
  */
 function changeMusic(id) {
   let btn = document.getElementById(id);
-  console.log(btn.src.slice(-10))
   if (btn.src.slice(-10) == "/music.png") {
     backgroundMusic.pause();
     backgroundMusic.currentTime = 0;
     backgroundMusic.loop = false;
     music = false;
-    btn.src = "/assets/img/10_interaction/noMusic.png";
+    btn.src = "/El-Pollo-Loco/assets/img/10_interaction/noMusic.png";
   } else {
     music = true;
-    btn.src = "/assets/img/10_interaction/music.png";
+    btn.src = "/El-Pollo-Loco/assets/img/10_interaction/music.png";
   }
 };
 

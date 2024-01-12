@@ -23,83 +23,83 @@ class Endboss extends MovableObject {
     walking_interval = null;
     jumpX_interval = null;
     dead_interval = null;
-    boss_jump = new Audio("/assets/audio/bossJump.mp3");
-    intro_music = new Audio("/assets/audio/bossIntro.mp3");
+    boss_jump = new Audio("/El-Pollo-Loco/assets/audio/bossJump.mp3");
+    intro_music = new Audio("/El-Pollo-Loco/assets/audio/bossIntro.mp3");
 
     IMAGES_WALKING = [
-        "assets/img/4_enemie_boss_chicken/1_walk/G1.png",
-        "assets/img/4_enemie_boss_chicken/1_walk/G2.png",
-        "assets/img/4_enemie_boss_chicken/1_walk/G3.png",
-        "assets/img/4_enemie_boss_chicken/1_walk/G4.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/1_walk/G1.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/1_walk/G2.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/1_walk/G3.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/1_walk/G4.png",
     ];
 
     IMAGES_ALERT = [
-        "/assets/img/4_enemie_boss_chicken/2_alert/G5.png",
-        "/assets/img/4_enemie_boss_chicken/2_alert/G6.png",
-        "/assets/img/4_enemie_boss_chicken/2_alert/G7.png",
-        "/assets/img/4_enemie_boss_chicken/2_alert/G8.png",
-        "/assets/img/4_enemie_boss_chicken/2_alert/G9.png",
-        "/assets/img/4_enemie_boss_chicken/2_alert/G10.png",
-        "/assets/img/4_enemie_boss_chicken/2_alert/G11.png",
-        "/assets/img/4_enemie_boss_chicken/2_alert/G12.png"
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/2_alert/G5.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/2_alert/G6.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/2_alert/G7.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/2_alert/G8.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/2_alert/G9.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/2_alert/G10.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/2_alert/G11.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/2_alert/G12.png"
     ];
 
     IMAGES_HURT = [
-        "assets/img/4_enemie_boss_chicken/4_hurt/G21.png",
-        "assets/img/4_enemie_boss_chicken/4_hurt/G22.png",
-        "assets/img/4_enemie_boss_chicken/4_hurt/G23.png"
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/4_hurt/G21.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/4_hurt/G22.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/4_hurt/G23.png"
     ]
 
     IMAGES_ATTACK_INITIATION = [
-        "assets/img/4_enemie_boss_chicken/3_attack/G13.png",
-        "assets/img/4_enemie_boss_chicken/3_attack/G14.png",
-        "assets/img/4_enemie_boss_chicken/3_attack/G15.png",
-        "assets/img/4_enemie_boss_chicken/3_attack/G16.png",
-        "assets/img/4_enemie_boss_chicken/3_attack/G15.png",
-        "assets/img/4_enemie_boss_chicken/3_attack/G16.png"
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/3_attack/G13.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/3_attack/G14.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/3_attack/G15.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/3_attack/G16.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/3_attack/G15.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/3_attack/G16.png"
 
     ];
 
     IMAGES_DYING = [
-        "assets/img/4_enemie_boss_chicken/5_dead/1.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/45-1.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/90-1.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/135-1.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/180-1.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/225-1.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/270-1.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/315-1.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/1.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/2.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/45-2.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/90-2.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/135-2.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/180-2.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/225-2.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/270-2.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/315-2.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/2.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/1.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/45-1.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/90-1.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/135-1.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/180-1.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/225-1.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/270-1.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/315-1.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/1.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/2.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/45-2.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/90-2.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/135-2.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/180-2.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/225-2.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/270-2.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/315-2.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/2.png",
     ]
 
     IMAGES_DEAD = [
-        "assets/img/4_enemie_boss_chicken/5_dead/3.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/45-3.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/90-3.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/135-3.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/180-3.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/225-3.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/270-3.png",
-        "assets/img/4_enemie_boss_chicken/5_dead/315-3.png"
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/3.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/45-3.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/90-3.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/135-3.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/180-3.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/225-3.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/270-3.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/5_dead/315-3.png"
     ]
 
     IMAGE_ATTACK = [
-        "assets/img/4_enemie_boss_chicken/3_attack/G18.png"
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/3_attack/G18.png"
     ];
 
     IMAGES_LANDING = [
-        "assets/img/4_enemie_boss_chicken/3_attack/G19.png",
-        "assets/img/4_enemie_boss_chicken/3_attack/G20.png",
-        "assets/img/4_enemie_boss_chicken/3_attack/G19.png"
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/3_attack/G19.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/3_attack/G20.png",
+        "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/3_attack/G19.png"
     ];
 
 
@@ -193,7 +193,7 @@ class Endboss extends MovableObject {
 
     /**
      * Initializes the `IMAGES_ALERT` variable to `null`, clears the `engage_interval` interval, 
-     * sets it to `null`, loads the image "/assets/img/4_enemie_boss_chicken/2_alert/G12.png",
+     * sets it to `null`, loads the image "/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/2_alert/G12.png",
      * enables the character to throw, and calls the `jump` function.
      *
      * @param {} - No parameters
@@ -203,7 +203,7 @@ class Endboss extends MovableObject {
         this.IMAGES_ALERT = null;
         clearInterval(this.engage_interval);
         this.engage_interval = null;
-        this.loadImage("/assets/img/4_enemie_boss_chicken/2_alert/G12.png");
+        this.loadImage("/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/2_alert/G12.png");
         this.world.character.canThrow = true;
         this.jump();
     };
@@ -267,7 +267,7 @@ class Endboss extends MovableObject {
             clearInterval(interval);
             interval = null;
         }
-        this.loadImage("/assets/img/4_enemie_boss_chicken/2_alert/G12.png");
+        this.loadImage("/El-Pollo-Loco/assets/img/4_enemie_boss_chicken/2_alert/G12.png");
         this.invincible = false;
         this.moving_interval = setInterval(() => {
             this.moveLeft();

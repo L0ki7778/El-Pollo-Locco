@@ -8,13 +8,13 @@ class ThrowableObject extends MovableObject {
     rotationY;
     rotation = 1;
     rotationSpeed = .2;
-    collision_sound= new Audio("/assets/audio/glass.mp3");
+    collision_sound= new Audio("/El-Pollo-Loco/assets/audio/glass.mp3");
 
     constructor() {
         super();
         this.x = -100;
         this.y = -100;
-        this.loadImage("assets/img/6_salsa_bottle/salsa_bottle.png");
+        this.loadImage("/El-Pollo-Loco/assets/img/6_salsa_bottle/salsa_bottle.png");
         this.width = 50;
         this.height = 50;
     };

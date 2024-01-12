@@ -102,7 +102,10 @@ class MovableObject extends DrawableObject {
                 clearInterval(intervalIds.splice(intervalIds.indexOf(this.gravityId), 1))
             } else {
                 this.stopFalling();
-                if (this instanceof Character) this.isJumping = false;
+                if (this instanceof Character) {
+                    this.isJumping = false;
+                    this.hitChicken = false;
+                }
             }
         }
     };
@@ -186,6 +189,9 @@ class MovableObject extends DrawableObject {
             this.health_percentage = this.energie -= 20;
             this.gotHurt = true;
             this.dmgAnimation();
+            if(this instanceof Character) {
+                this.resetIdleTimer();
+            }
             if (this.energie <= 0) {
                 this.healthBar.setPercentage(0);
             }

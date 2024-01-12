@@ -3,12 +3,12 @@ class HealthBar extends Statusbar {
     x;
 
     IMAGES = [
-        "assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png",
-        "assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/80.png",
-        "assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/60.png",
-        "assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/40.png",
-        "assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/20.png",
-        "assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/0.png"
+        "/El-Pollo-Loco/assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png",
+        "/El-Pollo-Loco/assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/80.png",
+        "/El-Pollo-Loco/assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/60.png",
+        "/El-Pollo-Loco/assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/40.png",
+        "/El-Pollo-Loco/assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/20.png",
+        "/El-Pollo-Loco/assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/0.png"
     ];
 
 
@@ -35,17 +35,17 @@ class BossHealth extends Statusbar {
     x;
 
     IMAGES_BOSS = [
-        "assets/img/7_statusbars/2_statusbar_endboss/200.png",
-        "assets/img/7_statusbars/2_statusbar_endboss/180.png",
-        "assets/img/7_statusbars/2_statusbar_endboss/160.png",
-        "assets/img/7_statusbars/2_statusbar_endboss/140.png",
-        "assets/img/7_statusbars/2_statusbar_endboss/120.png",
-        "assets/img/7_statusbars/2_statusbar_endboss/100.png",
-        "assets/img/7_statusbars/2_statusbar_endboss/80.png",
-        "assets/img/7_statusbars/2_statusbar_endboss/60.png",
-        "assets/img/7_statusbars/2_statusbar_endboss/40.png",
-        "assets/img/7_statusbars/2_statusbar_endboss/20.png",
-        "assets/img/7_statusbars/2_statusbar_endboss/0.png",
+        "/El-Pollo-Loco/assets/img/7_statusbars/2_statusbar_endboss/200.png",
+        "/El-Pollo-Loco/assets/img/7_statusbars/2_statusbar_endboss/180.png",
+        "/El-Pollo-Loco/assets/img/7_statusbars/2_statusbar_endboss/160.png",
+        "/El-Pollo-Loco/assets/img/7_statusbars/2_statusbar_endboss/140.png",
+        "/El-Pollo-Loco/assets/img/7_statusbars/2_statusbar_endboss/120.png",
+        "/El-Pollo-Loco/assets/img/7_statusbars/2_statusbar_endboss/100.png",
+        "/El-Pollo-Loco/assets/img/7_statusbars/2_statusbar_endboss/80.png",
+        "/El-Pollo-Loco/assets/img/7_statusbars/2_statusbar_endboss/60.png",
+        "/El-Pollo-Loco/assets/img/7_statusbars/2_statusbar_endboss/40.png",
+        "/El-Pollo-Loco/assets/img/7_statusbars/2_statusbar_endboss/20.png",
+        "/El-Pollo-Loco/assets/img/7_statusbars/2_statusbar_endboss/0.png",
     ];
 
     
